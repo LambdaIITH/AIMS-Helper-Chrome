@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+      <script src="jquery.js"></script>
+        <style>
+          body {
+            box-sizing: border-box;
+            width: 300px;
+          }
+          .heading {
+            text-align: center;
+            width: auto;
+            height: 40px;
+            color: black;
+            margin: 0px;
+            padding: 0px;
+          }
+          .heading p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: normal;
+            margin-bottom: 0px;
+          }
+          .status {
+            font-size: 14px;
+          }
+          .button-container {
+            margin-left: 0;
+            margin-right: 0;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+          }
+          .button-container button {
+            height: 100%;
+            width: 48%;
+          }
+        </style>
+    </head>
+    <body>
+        <div class="heading"><p>aims helper<p></div>
+        <p class="status" style="display: none">You are not on the AIMS Page. </p> <!-- Replace with JS checker later.  -->
+        <div class="button-container">
+        <button class="generate-timetable-button">Generate Timetable</button>
+        <button class="calculate-gpa-button">Calculate GPA</button>
+        </div>
+        <script src="popup.js"></script>
+    </body>
+</html>
