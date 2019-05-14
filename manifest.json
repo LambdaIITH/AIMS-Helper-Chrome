@@ -9,13 +9,5 @@
     "page_action": {
       "default_popup":"popup.html "
     },
-    "content_scripts": [
-        {
-          "matches": [
-            "<all_urls>"
-          ],
-          "js": ["jquery.js"]
-        }
-      ],
     "permissions": ["declarativeContent", "storage", "tabs", "<all_urls>","http://*/","https://*/"]
 }
