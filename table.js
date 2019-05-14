@@ -17,7 +17,7 @@ while (true)
 	var timetableRowsClass = "timeTabTr_"+currentID+"_"+data_deg_dtl+"_1";
 	var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
 	var currentCourseCodeInput = DOM.getElementById(courseCodeID);
-	if (currentTimetableDiv == null)
+	if (currentCourseCodeInput == null)
 		break ;
 
 	for (var i = 0 ; i < currentTimetableRows.length ; i++)
