@@ -1,12 +1,4 @@
-function eventFire(el, etype){
-  if (el.fireEvent) {
-    el.fireEvent('on' + etype);
-  } else {
-    var evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
-    el.dispatchEvent(evObj);
-  }
-}
+
 
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 var slots = ["09:00-09:55", "10:00-10:55", "11:00-11:55", "12:00-12:55", "14:30-15:55", "16:00-17:25"] // Add 5:30-7 later
@@ -24,8 +16,6 @@ while (true)
 	var courseCodeID = "cCd_"+currentID+"_"+data_deg_dtl+"_1";
 	var timetableRowsClass = "timeTabTr_"+currentID+"_"+data_deg_dtl+"_1";
 	var currentTimetableRows = DOM.getElementsByClassName(timetableID);
-	var spanID = "timeTab_"+currentID+"_"+data_deg_dtl+"_1";
-	eventFire(document.getElementById(spanID), "click");
 	var currentCourseCodeInput = DOM.getElementById(courseCodeID);
 	if (currentTimetableDiv == null)
 		break ;

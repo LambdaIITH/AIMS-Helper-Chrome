@@ -1,5 +1,6 @@
 // This function DOMtoString() converts the Document object into a String, this is done
 // because chrome.runtime.sendMessage() only works with strings and other JSON-serializable objects. 
+
 function DOMtoString(document_root) {
     var html = '',
         node = document_root.firstChild;
