@@ -9,3 +9,11 @@
       }]);
     });
   });
+  // This Listener listens to the Timetable Button click event
+  chrome.runtime.onMessage.addListener( 
+    function(request, sender)
+    {
+      if (request.action == "LaunchTimetableFile")
+        chrome.tabs.create({ url: chrome.runtime.getURL("table.html") });
+    } 
+  );

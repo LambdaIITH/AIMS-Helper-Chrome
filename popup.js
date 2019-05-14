@@ -1,11 +1,16 @@
+
 var whichButton = 0 ; // 0 : no button has been clicked
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "getSource") {
-  	var parser = new DOMParser();
-  	doc = parser.parseFromString(request.source, "text/html");
     if (whichButton == 1)
     {
-    	
+    	localStorage.setItem("DOM", request.source);
+    	chrome.runtime.sendMessage({
+    		action: "LaunchTimetableFile",
+    		source: "hello"
+    	}, function(data) {
+    		console.log(chrome.runtime.lastError.message);
+    	} );
     }
     else if (whichButton == 2)
     {
@@ -27,7 +32,6 @@ function onWindowLoad() {
     }
   });
 }
-
 document.getElementsByClassName("generate-timetable-button")[0].onclick = function() {
 	whichButton = 1 ; // timetable button click event
 	onWindowLoad();
