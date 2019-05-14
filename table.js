@@ -17,12 +17,26 @@ while (true)
 	var timetableRowsClass = "timeTabTr_"+currentID+"_"+data_deg_dtl+"_1";
 	var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
 	var currentCourseCodeInput = DOM.getElementById(courseCodeID);
+	console.log(currentCourseCodeInput);
 	if (currentCourseCodeInput == null)
 		break ;
 
 	for (var i = 0 ; i < currentTimetableRows.length ; i++)
 	{
-		console.log(currentTimetableRows[i]);
+		var currentSegmentStart = currentTimetableRows[i].getElementsByClassName("ttd1")[0].textContent.split("-")[0] ;
+		var currentSegmentEnd = currentTimetableRows[i].getElementsByClassName("ttd1")[0].textContent.split("-")[1] ;
+		var day = currentTimetableRows[i].getElementsByClassName("ttd2")[0].getElementsByTagName("span")[1].textContent.split("-")[0] ;
+		var time = currentTimetableRows[i].getElementsByClassName("ttd2")[0].getElementsByTagName("span")[1].textContent.split("-")[1]+"-"+currentTimetableRows[i].getElementsByClassName("ttd2")[0].getElementsByTagName("span")[1].textContent.split("-")[2] ;
+		var start = (parseInt(currentSegmentStart, 10) + 1) / 2 ;
+		var end = (parseInt(currentSegmentEnd, 10)) / 2 ;
+		for (; start <= end ; start++)
+		{
+			var cellClass = (days.indexOf(day)+1).toString() + "-" + start.toString() + "-" + (slots.indexOf(time)+1).toString();
+			if (document.getElementsByClassName(cellClass)[0].textContent == "")
+				document.getElementsByClassName(cellClass)[0].textContent = currentCourseCodeInput.getAttribute("title") ;
+			else
+				break ;
+		}
 	}
 	currentID += 1 ;
 }
