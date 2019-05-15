@@ -1,5 +1,4 @@
 
-
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 var slots = ["09:00-09:55", "10:00-10:55", "11:00-11:55", "12:00-12:55", "13:00-14:25", "14:30-15:55", "16:00-17:25"] // Add 5:30-7 later
 
@@ -16,10 +15,10 @@ while (true)
 	var timetableRowsClass = "timeTabTr_"+currentID+"_"+data_deg_dtl+"_1";
 	var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
 	var currentCourseCodeInput = DOM.getElementById(courseCodeID);
-	if (currentCourseCodeInput.getAttribute("title") == null)
-		currentCourseCodeInput.setAttribute("title", currentCourseCodeInput.previousSibling.data);
 	if (currentCourseCodeInput == null)
 		break ;
+	if (currentCourseCodeInput.getAttribute("title") == null)
+		currentCourseCodeInput.setAttribute("title", currentCourseCodeInput.previousSibling.data);
 	for (var i = 0 ; i < currentTimetableRows.length ; i++)
 	{
 		var currentSegmentStart = currentTimetableRows[i].getElementsByClassName("ttd1")[0].textContent.split("-")[0] ;
@@ -39,3 +38,9 @@ while (true)
 	}
 	currentID += 1 ;
 }
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementsByClassName("download-pdf")[0].addEventListener('click', function() {
+		var element = document.getElementById('timetable');
+		html2pdf(element);
+	});
+});
