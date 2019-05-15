@@ -18,13 +18,13 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     		console.log(chrome.runtime.lastError.message);
     	} );
     }
-    else if (whichButton == 2)
+    else if (whichButton == 2) // Code for CGPA
     {
 
     }
     else
     {
-    	console.log("You shouldn't be here. ");
+    	console.log("You shouldn't be here. "); // Um, just like that. 
     }
   }
 });
@@ -40,6 +40,7 @@ function onWindowLoad() {
 }
 
 function injectTimetable() {
+	document.getElementById("loading-image").style.display = "block";
 	chrome.tabs.executeScript(null, {
 		file: "activateTimetable.js"
 	}, function() {
