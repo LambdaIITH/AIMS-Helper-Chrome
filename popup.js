@@ -41,6 +41,7 @@ function onWindowLoad() {
 
 function injectTimetable() {
 	document.getElementById("loading-image").style.display = "block";
+	document.getElementsByClassName("button-container")[0].style.display="none";
 	chrome.tabs.executeScript(null, {
 		file: "activateTimetable.js"
 	}, function() {
