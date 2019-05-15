@@ -1,7 +1,7 @@
 
 
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-var slots = ["09:00-09:55", "10:00-10:55", "11:00-11:55", "12:00-12:55", "14:30-15:55", "16:00-17:25"] // Add 5:30-7 later
+var slots = ["09:00-09:55", "10:00-10:55", "11:00-11:55", "12:00-12:55", "13:00-14:25", "14:30-15:55", "16:00-17:25"] // Add 5:30-7 later
 
 var parser = new DOMParser();
 var DOM = parser.parseFromString(localStorage.getItem("DOM"), "text/html");
