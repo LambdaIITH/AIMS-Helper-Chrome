@@ -12,7 +12,6 @@ Google Chrome will now install the AIMS-Helper extension.
 
 ## Usage
 
-
 1. Navigate to your **AIMS Course Registration Page** in Chrome, click on the **A** logo in your Chrome extensions bar and click on **Generate Timetable**. A new tab should open, containing your timetable. 
 2. Click on **Download PDF** to download a PDF copy of your timetable. 
 
