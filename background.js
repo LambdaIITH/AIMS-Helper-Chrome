@@ -13,7 +13,9 @@
   chrome.runtime.onMessage.addListener( 
     function(request, sender)
     {
-      if (request.action == "LaunchTimetableFile")
-        chrome.tabs.create({ url: chrome.runtime.getURL("table.html") });
+     	if (request.action == "LaunchTimetableFile")
+    		chrome.tabs.create({ url: chrome.runtime.getURL("table.html") });
+    	else if(request.action == "LaunchGPAFile")
+    		chrome.tabs.create({ url: chrome.runtime.getURL("grades.html") });
     } 
   );

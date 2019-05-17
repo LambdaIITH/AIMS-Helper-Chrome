@@ -8,6 +8,6 @@ function activate() {
 }
 
 chrome.runtime.sendMessage({
-    action: "activateTimetable",
+    action: "activateGetSource",
     status: activate()
 });
