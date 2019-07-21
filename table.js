@@ -1,6 +1,9 @@
+// Firebase AUTH
 
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-var slots = ["09:00-09:55", "10:00-10:55", "11:00-11:55", "12:00-12:55", "13:00-14:25", "14:30-15:55", "16:00-17:25"] // Add 5:30-7 later
+var slots = ["09:00-09:55", "10:00-10:55", "11:00-11:55", "12:00-12:55", "13:00-14:30", "14:30-15:55", "16:00-17:25", "17:30-18:55", "19:00-20:30"] ;
+
+
 
 var parser = new DOMParser();
 var DOM = parser.parseFromString(localStorage.getItem("DOM"), "text/html");
@@ -43,4 +46,20 @@ document.addEventListener('DOMContentLoaded', function() {
 		var element = document.getElementById('timetable');
 		html2pdf(element);
 	});
+	
 });
+document.getElementsByClassName("send-to-db")[0].addEventListener('click', function() {
+	var config = {
+		apiKey: 'AIzaSyADsA9d1jkV3ly_8fezijTV7LvSTMGD6EM',
+		databaseURL: 'https://aims-helper-247320.firebaseio.com',
+		storageBucket: 'aims-helper-247320.appspot.com'
+	};
+	firebase.initializeApp(config);
+	chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+		var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
+		firebase.auth().signInWithCredential(credential);
+		console.log(token);
+	});		
+});
+
+
