@@ -105,7 +105,7 @@ while (true)
 		var day = currentTimetableRows[i].getElementsByClassName("ttd2")[0].getElementsByTagName("span")[1].textContent.split("-")[0] ;
 		var time = currentTimetableRows[i].getElementsByClassName("ttd2")[0].getElementsByTagName("span")[1].textContent.split("-")[1]+"-"+currentTimetableRows[i].getElementsByClassName("ttd2")[0].getElementsByTagName("span")[1].textContent.split("-")[2] ;
 		var newPossibilities = [];
-		if (!possibilities) {
+		if (!possibilities || !slotIndex[day][time]) {
 			noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
 			break ;
 		}
@@ -156,10 +156,10 @@ for (var i = 0 ; i < days.length ; i++) {
 		}
 	}
 }
-noMatchFound.forEach((course) => {
-	var node = document.createTextNode(course + " ");
-	document.getElementsByClassName("warning")[0].appendChild(node);
-});
+// noMatchFound.forEach((course) => {
+// 	var node = document.createTextNode(course + " ");
+// 	document.getElementsByClassName("warning")[0].appendChild(node);
+// });
 document.addEventListener('DOMContentLoaded', function() {
 	document.getElementsByClassName("download-pdf")[0].addEventListener('click', function() {
 		var element = document.getElementById('timetable');
