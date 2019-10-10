@@ -18,10 +18,6 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     		console.log(chrome.runtime.lastError.message);
     	} );
     }
-    else if (whichButton == 2) // Code for CGPA
-    {
-
-    }
     else
     {
     	console.log("You shouldn't be here. "); // Um, just like that. 
@@ -39,14 +35,26 @@ function onWindowLoad() {
   });
 }
 
+function showLoading() {
+    document.getElementById("loading-image").style.display = "block";
+    document.getElementsByClassName("button-container")[0].style.display="none";
+}
 function injectTimetable() {
-	document.getElementById("loading-image").style.display = "block";
-	document.getElementsByClassName("button-container")[0].style.display="none";
+    showLoading();
 	chrome.tabs.executeScript(null, {
 		file: "activateTimetable.js"
 	}, function() {
 		if (chrome.runtime.lastError)	console.log(chrome.runtime.lastError.message);
 	});
+}
+
+function injectGPA() {
+    showLoading();
+    chrome.tabs.executeScript(null, {
+        file: "activateGPA.js"
+    }, function() {
+        if(chrome.runtime.lastError) console.log(chrome.runtime.lastError.message);
+    });
 }
 
 document.getElementsByClassName("generate-timetable-button")[0].onclick = function() {
@@ -55,5 +63,5 @@ document.getElementsByClassName("generate-timetable-button")[0].onclick = functi
 };
 document.getElementsByClassName("calculate-gpa-button")[0].onclick = function() {
 	whichButton = 2 ; // GPA Button click event
-	injectTimetable();
+	injectGPA();
 };
