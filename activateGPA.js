@@ -6,7 +6,7 @@ var exclude_list = [
   'Honours project',
   'Honours coursework',
   'FCC',
-  'Additional Course'
+  'Additional'
 ];
 var grade_values = {
   'A+': 10,
@@ -20,7 +20,7 @@ var grade_values = {
   'FR': 0,
   'FS': 0
 };
-console.log(studentId);
+//console.log(studentId);
 append_checkbox = function(parent, is_checked){
     parent.append("<input class=\"cgpa_cal_check\" type=\"checkbox\" "+(is_checked?"checked":"")+" />");
 }
@@ -47,6 +47,7 @@ add_checkboxes = function(){
 }
 
 show_total_gpa = function(){
+    var courses = [];
     $('#gpa_button').val('Calculating');
     $('#gpa_bar').remove();
     total_grades = 0;
@@ -57,24 +58,28 @@ show_total_gpa = function(){
     elems.each(function(i){
         if ($(this).find(".cgpa_cal_check:checked").length == 0 )
             return;
-        grade = $(this).children(".col8").html().trim().slice(6);
-        credits = $(this).children(".col3").html().trim().slice(6);
-        if (!(grade in grade_values))
+
+        var course = new Object();
+        course.id = $(this).children(".col1").html().trim();
+        course.name = $(this).children(".col2").html().trim();
+        course.type = $(this).children(".col5").html().trim().slice(6);
+        course.grade = $(this).children(".col8").html().trim().slice(6);
+        course.credits = $(this).children(".col3").html().trim().slice(6);
+        if (!(course.grade in grade_values))
             return;
-        grade = grade_values[grade];
-        credits = Number(credits);
-        total_grades += credits * grade;
+        grade_value = grade_values[course.grade];
+        credits = Number(course.credits);
+        total_grades += credits * grade_value;
         total_credits += credits;
+        courses.push(course);
     });
     console.log(total_grades, total_credits);
     var gpa = (total_grades / total_credits).toFixed(2);
-    $('#gpa_button').val('Show Gpa');
-    $('#courseHistoryUI .clear').after('<ul id="gpa_bar" class="subCnt"><li class="hierarchyLi dataLi hierarchyHdr changeHdrCls"><span class="col"> TOTAL GPA </span></li><li class="hierarchyLi dataLi"><span class="col1 col">&nbsp;</span><span class="col2 col">Total GPA of graded courses</span><span class="col3 col">&nbsp;</span><span class="col4 col">&nbsp;</span><span class="col5 col">&nbsp;</span><span class="col6 col">&nbsp;</span><span class="col7 col">&nbsp;</span><span class="col4 col">' + gpa + '</span></li></ul>');
+    return {courses: courses,
+        gpa: gpa
+    };
 }
-if (!(typeof unsafeWindow === 'undefined')) {
-  unsafeWindow.show_total_gpa = show_total_gpa;
-  unsafeWindow.exclude_list = exclude_list;
-  unsafeWindow.add_checkbox = add_checkbox;
-  unsafeWindow.grade_values = grade_values;
-}
-$('#studentCourseSearch').before('<input id="gpa_button" class="btn" value="Show Gpa" style="width:75px;margib-right:10px; opacity:1;" type="button" onclick="show_total_gpa();"></input>');
+chrome.runtime.sendMessage({
+    action: "parsedGPA",
+    data: show_total_gpa()
+});

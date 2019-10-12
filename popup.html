@@ -39,6 +39,17 @@
             height: 100%;
             width: 48%;
           }
+          .gpa-container {
+            display: none;
+            justify-content: center;
+            margin-bottom: 15px;
+          }
+          .gpa-text{
+            font-family: 'Helvetica', sans-serif;
+            padding: 0 10px 0 10px;
+            font-size: 14px;
+            color: #444444;
+          }
           #loading-image {
             display: none;
             margin-left: auto;
@@ -49,6 +60,9 @@
     <body>
         <div class="heading"><p>aims helper<p></div>
         <p class="status" style="display: none">You are not on the AIMS Page. </p> <!-- Replace with JS checker later.  -->
+        <div class="gpa-container">
+          <span class="gpa-text"> GPA </span><span class="gpa-text">=</span> <span class="gpa-text gpa-value"></span>
+        </div>
         <div class="button-container">
         <button class="generate-timetable-button">Generate Timetable</button>
         <button class="calculate-gpa-button">Calculate GPA</button>
