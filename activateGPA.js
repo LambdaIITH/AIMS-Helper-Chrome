@@ -1,0 +1,85 @@
+/*
+Source: https://github.com/IITH/aims-gpa-calculator
+*/
+
+var exclude_list = [
+  'Honours project',
+  'Honours coursework',
+  'FCC',
+  'Additional'
+];
+var grade_values = {
+  'A+': 10,
+  'A': 10,
+  'A-': 9,
+  'B': 8,
+  'B-': 7,
+  'C': 6,
+  'C-': 5,
+  'D': 4,
+  'FR': 0,
+  'FS': 0
+};
+//console.log(studentId);
+append_checkbox = function(parent, is_checked){
+    parent.append("<input class=\"cgpa_cal_check\" type=\"checkbox\" "+(is_checked?"checked":"")+" />");
+}
+add_checkboxes = function(){
+    var courses_checked = new Set();
+    $(".cgpa_cal_check").remove();
+    elems = $(".hierarchyLi.dataLi").not(".hierarchyHdr, .hierarchySubHdr");
+    elems.each(function(i){
+        var course_id = $(this).children(".col1").html().trim();
+        if (courses_checked.has(course_id)){
+            append_checkbox($(this).children(".col1"), false);
+            return;
+        }
+        is_checked = true;
+        type = $(this).children(".col5").html().trim().slice(6);
+        grade = $(this).children(".col8").html().trim().slice(6);
+        console.log(grade, grade.length);
+        if (exclude_list.indexOf(type) > -1 || grade == "" || grade == "I")
+            is_checked = false;
+        if (is_checked)
+            courses_checked.add(course_id);
+        append_checkbox($(this).children(".col1"), is_checked);
+    });
+}
+
+show_total_gpa = function(){
+    var courses = [];
+    $('#gpa_button').val('Calculating');
+    $('#gpa_bar').remove();
+    total_grades = 0;
+    total_credits = 0;
+    if ($(".cgpa_cal_check").length==0)
+        add_checkboxes();
+    elems = $(".hierarchyLi.dataLi").not(".hierarchyHdr, .hierarchySubHdr");
+    elems.each(function(i){
+        if ($(this).find(".cgpa_cal_check:checked").length == 0 )
+            return;
+
+        var course = new Object();
+        course.id = $(this).children(".col1").html().trim();
+        course.name = $(this).children(".col2").html().trim();
+        course.type = $(this).children(".col5").html().trim().slice(6);
+        course.grade = $(this).children(".col8").html().trim().slice(6);
+        course.credits = $(this).children(".col3").html().trim().slice(6);
+        if (!(course.grade in grade_values))
+            return;
+        grade_value = grade_values[course.grade];
+        credits = Number(course.credits);
+        total_grades += credits * grade_value;
+        total_credits += credits;
+        courses.push(course);
+    });
+    console.log(total_grades, total_credits);
+    var gpa = (total_grades / total_credits).toFixed(2);
+    return {courses: courses,
+        gpa: gpa
+    };
+}
+chrome.runtime.sendMessage({
+    action: "parsedGPA",
+    data: show_total_gpa()
+});
