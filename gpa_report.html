@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GPA Report</title>
+    <style type="text/css">
+      @font-face {
+      font-family: Roboto;
+      src: url('Roboto-Regular.ttf');
+    }
+      body{
+        font-family: Roboto;
+        font-size: 13px;
+      }
+      ul{
+        list-style:none;
+        margin-left:0;
+        padding-left:1em;
+        /*text-indent:-1em;*/
+      }
+      h2{
+        margin-left: 20%;
+        color: #552200;
+      }
+      .personal{
+        margin-left: 30%;
+        width:40%;
+      }
+      label{
+        padding: 3px 7px;
+        display:inline-block;
+        width: 120px;
+        margin-bottom: 5px;
+      }
+      .summary{
+        margin-left: 30%;
+        width:40%;
+      }
+      table, th, td{
+        border: 2px solid #ff6600;
+        border-collapse: collapse;
+        padding: 3px 10px;
+      }
+      .credits{
+        text-align: center;
+      }
+      .total{
+        font-weight: bold;
+        color: #aa3300;
+      }
+      .exclude{
+        color: #333333;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Details</h2>
+    <div class="personal">
+      <ul>
+        <li>
+          <label>Name</label>
+          <span class="value name"></span>
+        </li>
+        <li>
+          <label>Roll Number</label>
+          <span class="value rollno"></span>
+        </li>
+        <li>
+          <label>Branch</label>
+          <span class="value branch"></span>
+        </li>
+        <li>
+          <label>Student Type</label>
+          <span class="value student-type"></span>
+        <li>
+          <label>CGPA</label>
+          <span class="value cgpa">9.69</span>
+         </li>
+      </ul>
+    </div>
+    <h2> Summary</h2>
+    <table class="summary">
+      <tr>
+        <th>Category</th>
+        <th class="credits">Credits</th>
+      </tr>
+    </table>
+    <script src="gpa_report.js"></script>
+  </body>
+</html>

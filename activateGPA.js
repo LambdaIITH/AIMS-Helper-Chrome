@@ -55,6 +55,7 @@ show_total_gpa = function(){
     if ($(".cgpa_cal_check").length==0)
         add_checkboxes();
     elems = $(".hierarchyLi.dataLi").not(".hierarchyHdr, .hierarchySubHdr");
+    var type_credits_map = new Map();
     elems.each(function(i){
         if ($(this).find(".cgpa_cal_check:checked").length == 0 )
             return;
@@ -64,18 +65,31 @@ show_total_gpa = function(){
         course.name = $(this).children(".col2").html().trim();
         course.type = $(this).children(".col5").html().trim().slice(6);
         course.grade = $(this).children(".col8").html().trim().slice(6);
-        course.credits = $(this).children(".col3").html().trim().slice(6);
+        course.credits = Number($(this).children(".col3").html().trim().slice(6));
         if (!(course.grade in grade_values))
             return;
+
+        if (type_credits_map.has(course.type))
+          type_credits_map.set(course.type, type_credits_map.get(course.type) + course.credits);
+        else
+          type_credits_map.set(course.type, course.credits);
+
+
         grade_value = grade_values[course.grade];
-        credits = Number(course.credits);
+        credits = course.credits;
         total_grades += credits * grade_value;
         total_credits += credits;
         courses.push(course);
     });
     console.log(total_grades, total_credits);
     var gpa = (total_grades / total_credits).toFixed(2);
-    return {courses: courses,
+    return {
+        name: $(".stuName").text().trim(),
+        rollno: $(".studentInfoDiv>.flexDiv:nth-child(3)").find("span").text().trim(),
+        branch: $(".studentInfoDiv>.flexDiv:nth-child(5)").find("div:nth-child(1)").find("span").text().trim(),
+        student_type: $(".studentInfoDiv>.flexDiv:nth-child(5)").find("div:nth-child(2)").find("span").text().trim(),
+        type_credits_map: JSON.stringify(Array.from(type_credits_map)),
+        //courses: courses,
         gpa: gpa
     };
 }

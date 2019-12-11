@@ -73,6 +73,9 @@ chrome.runtime.onMessage.addListener(function(request, sender){
         document.getElementsByClassName("gpa-container")[0].style.display = "flex";
         document.getElementsByClassName("gpa-value")[0].innerText = gpa_value;
         //TODO: use the courses and GPA to display in another tab.
+
+        localStorage.setItem("courseGPA", JSON.stringify(request.data));
+        chrome.tabs.create({ url: chrome.runtime.getURL("gpa_report.html")});
     }
 });
 document.getElementsByClassName("generate-timetable-button")[0].onclick = function() {
