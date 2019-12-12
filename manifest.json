@@ -3,11 +3,11 @@
     "name": "AIMS-Helper",
     "version": "0.1",
     "background": {
-      "scripts": ["background.js"],
+      "scripts": ["/src/bg/background.js"],
       "persistent":false
     },
     "page_action": {
-      "default_popup":"popup.html "
+      "default_popup":"/src/popup/popup.html"
     },
     "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://apis.google.com; object-src 'self'",
     "permissions": ["declarativeContent", "storage", "tabs", "<all_urls>","http://*/","https://*/", "identity"],
