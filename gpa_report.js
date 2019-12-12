@@ -25,3 +25,10 @@ total_row.className = "total";
 total_row.innerHTML = `<td>Total</td><td class="credits">${total_credits}</td>`;
 summary_table.appendChild(total_row);
 console.log(data);
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementsByClassName("download-pdf")[0].addEventListener('click', function() {
+        var element = document.getElementsByClassName('report')[0];
+        html2pdf(element);
+    });
+});

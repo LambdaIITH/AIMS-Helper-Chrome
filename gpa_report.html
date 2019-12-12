@@ -11,19 +11,23 @@
         font-family: Roboto;
         font-size: 13px;
       }
+      .report{
+        margin-top: 30px;
+        margin-left: 20px;
+      }
+      .personal, .summary{
+        margin-left: 50px;
+        width: 400px;
+        margin-top: 20px;
+      }
       ul{
         list-style:none;
         margin-left:0;
         padding-left:1em;
         /*text-indent:-1em;*/
       }
-      h2{
-        margin-left: 20%;
+      h1{
         color: #552200;
-      }
-      .personal{
-        margin-left: 30%;
-        width:40%;
       }
       label{
         padding: 3px 7px;
@@ -31,11 +35,7 @@
         width: 120px;
         margin-bottom: 5px;
       }
-      .summary{
-        margin-left: 30%;
-        width:40%;
-      }
-      table, th, td{
+      .summary, .summary th, .summary td{
         border: 2px solid #ff6600;
         border-collapse: collapse;
         padding: 3px 10px;
@@ -50,40 +50,61 @@
       .exclude{
         color: #333333;
       }
+      button {
+        color: #77220a;
+        background-color:#fee;
+        border: 1.2px solid #aa3300;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+        padding-top: 0.5%;
+        padding-bottom: 0.5%;
+        border-radius: 3px;
+        margin-top: 30px;
+        margin-left: 190px;
+        transition: 0.25s all;
+      }
+      button:hover {
+        color: white;
+        border-color: #552200;
+        background-color: #ff6600;
+      }
     </style>
   </head>
   <body>
-    <h2>Details</h2>
-    <div class="personal">
-      <ul>
-        <li>
-          <label>Name</label>
-          <span class="value name"></span>
-        </li>
-        <li>
-          <label>Roll Number</label>
-          <span class="value rollno"></span>
-        </li>
-        <li>
-          <label>Branch</label>
-          <span class="value branch"></span>
-        </li>
-        <li>
-          <label>Student Type</label>
-          <span class="value student-type"></span>
-        <li>
-          <label>CGPA</label>
-          <span class="value cgpa">9.69</span>
-         </li>
-      </ul>
+    <div class="report">
+      <h1>Details</h1>
+      <table class="personal">
+        <tr>
+          <td><label>Name</label></td>
+          <td><span class="value name"></span></td>
+        </tr>
+          <tr>
+            <td><label>Roll Number</label></td>
+            <td><span class="value rollno"></span></td>
+          </tr>
+          <tr>
+            <td><label>Branch</label></td>
+            <td><span class="value branch"></span></td>
+          </tr>
+          <tr>
+            <td><label>Student Type</label></td>
+            <td><span class="value student-type"></span></td>
+          </tr>
+          <tr>
+            <td><label>CGPA</label></td>
+            <td><span class="value cgpa"></span></td>
+           </tr>
+        </table>
+      <h1> Summary</h1>
+      <table class="summary">
+        <tr>
+          <th>Category</th>
+          <th class="credits">Credits</th>
+        </tr>
+      </table>
     </div>
-    <h2> Summary</h2>
-    <table class="summary">
-      <tr>
-        <th>Category</th>
-        <th class="credits">Credits</th>
-      </tr>
-    </table>
+    <button class="download-pdf">Download PDF</button>
+    <script src="html2pdf.bundle.min.js"></script>
     <script src="gpa_report.js"></script>
   </body>
 </html>
