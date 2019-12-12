@@ -3,6 +3,8 @@ Source: https://github.com/IITH/aims-gpa-calculator
 */
 
 var exclude_list = [
+  'Minor core',
+  'Honors core',
   'Honours project',
   'Honours coursework',
   'FCC',
@@ -61,7 +63,9 @@ show_total_gpa = function(){
             return;
 
         var course = new Object();
-        course.id = $(this).children(".col1").html().trim();
+        course.code = $(this).children(".col1").contents().filter(function(){
+            return this.nodeType == Node.TEXT_NODE;
+          }).text().trim();
         course.name = $(this).children(".col2").html().trim();
         course.type = $(this).children(".col5").html().trim().slice(6);
         course.grade = $(this).children(".col8").html().trim().slice(6);
@@ -89,7 +93,7 @@ show_total_gpa = function(){
         branch: $(".studentInfoDiv>.flexDiv:nth-child(5)").find("div:nth-child(1)").find("span").text().trim(),
         student_type: $(".studentInfoDiv>.flexDiv:nth-child(5)").find("div:nth-child(2)").find("span").text().trim(),
         type_credits_map: JSON.stringify(Array.from(type_credits_map)),
-        //courses: courses,
+        courses: JSON.stringify(courses),
         gpa: gpa
     };
 }

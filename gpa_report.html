@@ -8,16 +8,24 @@
       src: url('Roboto-Regular.ttf');
     }
       body{
+        text-align: center;
         font-family: Roboto;
         font-size: 13px;
       }
       .report{
+        display: inline-block;
+        text-align: left;
         margin-top: 30px;
         margin-left: 20px;
       }
       .personal, .summary{
         margin-left: 50px;
-        width: 400px;
+        width: 600px;
+        margin-top: 20px;
+      }
+      .courses{
+        margin-left: 50px;
+        width: 600px;
         margin-top: 20px;
       }
       ul{
@@ -35,7 +43,7 @@
         width: 120px;
         margin-bottom: 5px;
       }
-      .summary, .summary th, .summary td{
+      .courses, .summary, .courses th, .summary th, .courses td, .summary td{
         border: 2px solid #ff6600;
         border-collapse: collapse;
         padding: 3px 10px;
@@ -60,7 +68,7 @@
         padding-bottom: 0.5%;
         border-radius: 3px;
         margin-top: 30px;
-        margin-left: 190px;
+        margin-left: 50px;
         transition: 0.25s all;
       }
       button:hover {
@@ -95,14 +103,24 @@
             <td><span class="value cgpa"></span></td>
            </tr>
         </table>
-      <h1> Summary</h1>
+      <h1>Summary</h1>
       <table class="summary">
         <tr>
           <th>Category</th>
           <th class="credits">Credits</th>
         </tr>
       </table>
+      <h1>Selected Courses</h1>
+      <table class="courses">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Credits</th>
+          <th>Grade</th>
+        </tr>
+      </table>
     </div>
+    <br/>
     <button class="download-pdf">Download PDF</button>
     <script src="html2pdf.bundle.min.js"></script>
     <script src="gpa_report.js"></script>

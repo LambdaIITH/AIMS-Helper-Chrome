@@ -1,4 +1,4 @@
-data = JSON.parse(localStorage.getItem("courseGPA"));
+var data = JSON.parse(localStorage.getItem("courseGPA"));
 
 
 
@@ -25,6 +25,26 @@ total_row.className = "total";
 total_row.innerHTML = `<td>Total</td><td class="credits">${total_credits}</td>`;
 summary_table.appendChild(total_row);
 console.log(data);
+
+
+var courses_table = document.getElementsByClassName("courses")[0];
+var courses_array = JSON.parse(data.courses);
+courses_array.sort(function(a, b){
+    if (a.code < b.code)
+        return -1;
+    if (a.code > b.code)
+        return 1;
+    else return 0;
+});
+for (var course of courses_array) {
+    var row = document.createElement("tr");
+    row.innerHTML = `<td>${course.code}</td>
+                     <td>${course.name}</td>
+                     <td class="credits">${course.credits}</td>
+                     <td class="credits">${course.grade}</td>`;
+    courses_table.appendChild(row);
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementsByClassName("download-pdf")[0].addEventListener('click', function() {
