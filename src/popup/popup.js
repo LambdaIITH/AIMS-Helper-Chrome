@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
 function onWindowLoad() {
 	chrome.tabs.executeScript(null, {
-    file: "getSource.js"
+    file: "/src/timetable/getSource.js"
   }, function() {
     if (chrome.runtime.lastError) {
       console.log(chrome.runtime.lastError.message);
@@ -48,7 +48,7 @@ function removeLoading() {
 function injectTimetable() {
     showLoading();
 	chrome.tabs.executeScript(null, {
-		file: "activateTimetable.js"
+		file: "/src/timetable/activateTimetable.js"
 	}, function() {
 		if (chrome.runtime.lastError)	console.log(chrome.runtime.lastError.message);
 	});
@@ -57,10 +57,10 @@ function injectTimetable() {
 function injectGPA() {
     showLoading();
     chrome.tabs.executeScript(null, {
-        file: "jquery-3.4.1.min.js"
+        file: "/js/jquery-3.4.1.min.js"
     }, function(result){
         chrome.tabs.executeScript(null, {
-            file: "activateGPA.js"
+            file: "/src/gpa/activateGPA.js"
         }, function() {
             if(chrome.runtime.lastError) console.log(chrome.runtime.lastError.message);
         });
@@ -73,6 +73,9 @@ chrome.runtime.onMessage.addListener(function(request, sender){
         document.getElementsByClassName("gpa-container")[0].style.display = "flex";
         document.getElementsByClassName("gpa-value")[0].innerText = gpa_value;
         //TODO: use the courses and GPA to display in another tab.
+
+        localStorage.setItem("courseGPA", JSON.stringify(request.data));
+        chrome.tabs.create({ url: chrome.runtime.getURL("/src/gpa/gpa_report.html")});
     }
 });
 document.getElementsByClassName("generate-timetable-button")[0].onclick = function() {

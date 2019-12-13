@@ -14,6 +14,6 @@
     function(request, sender)
     {
       if (request.action == "LaunchTimetableFile")
-        chrome.tabs.create({ url: chrome.runtime.getURL("table.html") });
+        chrome.tabs.create({ url: chrome.runtime.getURL("/src/timetable/table.html") });
     } 
   );
