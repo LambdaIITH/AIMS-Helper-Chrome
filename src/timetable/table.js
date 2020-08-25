@@ -97,103 +97,118 @@ function getAllIndexes(arr, val) {
 
 var parser = new DOMParser();
 var DOM = parser.parseFromString(localStorage.getItem("DOM"), "text/html");
-var data_deg_dtl = DOM.getElementsByClassName("studentDegDtls")[0].getAttribute(
-  "data-deg-dtl"
-);
-var studentDegreeString = "stdntDeg_x_" + data_deg_dtl + "_1"; // Course Div String (x represents the serial number of the course)
-var noMatchFound = [];
-var currentID = 1;
+
 var identifiedCourses = [];
 var identifiedSlots = [];
 var identifiedSegments = [];
 
-while (true) {
-  var courseCodeID = "cCd_" + currentID + "_" + data_deg_dtl + "_1";
-  var timetableRowsClass = "timeTabTr_" + currentID + "_" + data_deg_dtl + "_1";
-  var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
-  var currentCourseCodeInput = DOM.getElementById(courseCodeID);
-  if (currentCourseCodeInput == null) break;
-  if (currentCourseCodeInput.getAttribute("title") == null)
-    currentCourseCodeInput.setAttribute(
-      "title",
-      currentCourseCodeInput.previousSibling.data
-    );
-  // Get the course segment duration.getElements
-  var segmentString = "";
-  if (!currentTimetableRows[0].getElementsByClassName("ttd1")[0]) {
-    currentID += 1;
-    noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
-    continue;
-  }
-  var currentSegmentStart = currentTimetableRows[0]
-    .getElementsByClassName("ttd1")[0]
-    .textContent.split("-")[0];
+var numDegrees = parseInt(DOM.getElementsByClassName("studentDegDtls").length);
 
-  var currentSegmentEnd = currentTimetableRows[0]
-    .getElementsByClassName("ttd1")[0]
-    .textContent.split("-")[1];
-  var counterSegment = parseInt(currentSegmentStart, 10);
-  while (counterSegment <= parseInt(currentSegmentEnd, 10)) {
-    segmentString += counterSegment.toString();
-    counterSegment++;
-  }
-  // Get the list of prospective slots from the first entry.
-  var day = currentTimetableRows[0]
-    .getElementsByClassName("ttd2")[0]
-    .getElementsByTagName("span")[1]
-    .textContent.split("-")[0];
-  var time =
-    currentTimetableRows[0]
-      .getElementsByClassName("ttd2")[0]
-      .getElementsByTagName("span")[1]
-      .textContent.split("-")[1] +
-    "-" +
-    currentTimetableRows[0]
-      .getElementsByClassName("ttd2")[0]
-      .getElementsByTagName("span")[1]
-      .textContent.split("-")[2];
-  var possibilities = slotIndex[day][time];
-  for (var i = 1; i < currentTimetableRows.length; i++) {
-    var day = currentTimetableRows[i]
-      .getElementsByClassName("ttd2")[0]
-      .getElementsByTagName("span")[1]
-      .textContent.split("-")[0];
-    var time =
-      currentTimetableRows[i]
-        .getElementsByClassName("ttd2")[0]
-        .getElementsByTagName("span")[1]
-        .textContent.split("-")[1] +
-      "-" +
-      currentTimetableRows[i]
-        .getElementsByClassName("ttd2")[0]
-        .getElementsByTagName("span")[1]
-        .textContent.split("-")[2];
-    var newPossibilities = [];
-    if (!possibilities || !slotIndex[day][time]) {
-      noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
-      break;
-    }
-    possibilities.forEach(possibility => {
-      if (slotIndex[day][time].includes(possibility)) {
-        newPossibilities.push(possibility);
+for(var degDetails=0; degDetails<numDegrees; degDetails++){
+  var data_deg_dtl = DOM.getElementsByClassName("studentDegDtls")[degDetails].getAttribute(
+    "data-deg-dtl"
+  );
+  var studentDegreeString = "stdntDeg_x_" + data_deg_dtl + "_1"; // Course Div String (x represents the serial number of the course)
+  var noMatchFound = [];
+
+  for(var courseType=1; courseType<=3; courseType++){
+    var currentID = 1;
+
+    while (true) {
+      var courseCodeID = "cCd_" + currentID + "_" + data_deg_dtl + "_" + courseType;
+      var courseDesc = "cDesc_" + currentID + "_" + data_deg_dtl + "_" + courseType;
+      var timetableRowsClass = "timeTabTr_" + currentID + "_" + data_deg_dtl + "_" + courseType;
+
+      var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
+      var currentCourseCodeInput = DOM.getElementById(courseCodeID);
+      var currentCourseDesc = DOM.getElementById(courseDesc);
+
+      if (currentCourseCodeInput == null) break;
+      if (currentCourseCodeInput.getAttribute("title") == null)
+        currentCourseCodeInput.setAttribute(
+          "title",
+          currentCourseCodeInput.previousSibling.data
+        );
+      // Get the course segment duration.getElements
+      var segmentString = "";
+      if (!currentTimetableRows[0].getElementsByClassName("ttd1")[0]) {
+        currentID += 1;
+        noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
+        continue;
       }
-    });
-    possibilities = newPossibilities;
-    if (possibilities.length == 0) {
-      break;
+      var currentSegmentStart = currentTimetableRows[0]
+        .getElementsByClassName("ttd1")[0]
+        .textContent.split("-")[0];
+
+      var currentSegmentEnd = currentTimetableRows[0]
+        .getElementsByClassName("ttd1")[0]
+        .textContent.split("-")[1];
+      var counterSegment = parseInt(currentSegmentStart, 10);
+      while (counterSegment <= parseInt(currentSegmentEnd, 10)) {
+        segmentString += counterSegment.toString();
+        counterSegment++;
+      }
+      // Get the list of prospective slots from the first entry.
+      var day = currentTimetableRows[0]
+        .getElementsByClassName("ttd2")[0]
+        .getElementsByTagName("span")[1]
+        .textContent.split("-")[0];
+      var time =
+        currentTimetableRows[0]
+          .getElementsByClassName("ttd2")[0]
+          .getElementsByTagName("span")[1]
+          .textContent.split("-")[1] +
+        "-" +
+        currentTimetableRows[0]
+          .getElementsByClassName("ttd2")[0]
+          .getElementsByTagName("span")[1]
+          .textContent.split("-")[2];
+      var possibilities = slotIndex[day][time];
+      for (var i = 1; i < currentTimetableRows.length; i++) {
+        var day = currentTimetableRows[i]
+          .getElementsByClassName("ttd2")[0]
+          .getElementsByTagName("span")[1]
+          .textContent.split("-")[0];
+        var time =
+          currentTimetableRows[i]
+            .getElementsByClassName("ttd2")[0]
+            .getElementsByTagName("span")[1]
+            .textContent.split("-")[1] +
+          "-" +
+          currentTimetableRows[i]
+            .getElementsByClassName("ttd2")[0]
+            .getElementsByTagName("span")[1]
+            .textContent.split("-")[2];
+        var newPossibilities = [];
+        if (!possibilities || !slotIndex[day][time]) {
+          noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
+          break;
+        }
+        possibilities.forEach(possibility => {
+          if (slotIndex[day][time].includes(possibility)) {
+            newPossibilities.push(possibility);
+          }
+        });
+        possibilities = newPossibilities;
+        if (possibilities.length == 0) {
+          break;
+        }
+      }
+      if (possibilities) {
+        if (possibilities.length == 1) {
+          identifiedCourses.push(currentCourseCodeInput.getAttribute("title") + (courseType != 1 ? "*" : "") + 
+            "\n" + currentCourseDesc.getAttribute("title"));
+          identifiedSlots.push(possibilities[0]);
+          identifiedSegments.push(segmentString);
+        } else {
+          noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
+        }
+      }
+      currentID += 1;
     }
   }
-  if (possibilities) {
-    if (possibilities.length == 1) {
-      identifiedCourses.push(currentCourseCodeInput.getAttribute("title"));
-      identifiedSlots.push(possibilities[0]);
-      identifiedSegments.push(segmentString);
-    } else {
-      noMatchFound.push(currentCourseCodeInput.getAttribute("title"));
-    }
-  }
-  currentID += 1;
 }
+
 // Add warning about noMatchFound
 console.log(identifiedCourses);
 // Actually Put Timetable On Screen
