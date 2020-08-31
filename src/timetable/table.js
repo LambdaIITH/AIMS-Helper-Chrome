@@ -104,20 +104,28 @@ var studentDegreeString = "stdntDeg_x_" + data_deg_dtl + "_1"; // Course Div Str
 var noMatchFound = [];
 var currentID = 1;
 var identifiedCourses = [];
+var identifiedCourseNames = [];
 var identifiedSlots = [];
 var identifiedSegments = [];
 
 while (true) {
   var courseCodeID = "cCd_" + currentID + "_" + data_deg_dtl + "_1";
+  var courseCodeName = "cDesc_" + currentID + "_" + data_deg_dtl + "_1";
   var timetableRowsClass = "timeTabTr_" + currentID + "_" + data_deg_dtl + "_1";
   var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
   var currentCourseCodeInput = DOM.getElementById(courseCodeID);
+  var currentCourseNameInput = DOM.getElementById(courseCodeName);
   if (currentCourseCodeInput == null) break;
-  if (currentCourseCodeInput.getAttribute("title") == null)
+  if (currentCourseCodeInput.getAttribute("title") == null) {
     currentCourseCodeInput.setAttribute(
       "title",
       currentCourseCodeInput.previousSibling.data
     );
+    currentCourseNameInput.setAttribute(
+      "title",
+      currentCourseNameInput.previousSibling.data
+    );
+  }
   // Get the course segment duration.getElements
   var segmentString = "";
   if (!currentTimetableRows[0].getElementsByClassName("ttd1")[0]) {
@@ -186,6 +194,7 @@ while (true) {
   if (possibilities) {
     if (possibilities.length == 1) {
       identifiedCourses.push(currentCourseCodeInput.getAttribute("title"));
+      identifiedCourseNames.push(currentCourseNameInput.getAttribute("title"));
       identifiedSlots.push(possibilities[0]);
       identifiedSegments.push(segmentString);
     } else {
@@ -195,7 +204,7 @@ while (true) {
   currentID += 1;
 }
 // Add warning about noMatchFound
-console.log(identifiedCourses);
+console.log(identifiedCourses, identifiedCourseNames);
 // Actually Put Timetable On Screen
 for (var i = 0; i < days.length; i++) {
   for (var j = 0; j < slots.length; j++) {
@@ -224,6 +233,17 @@ for (var i = 0; i < days.length; i++) {
       });
     }
   }
+}
+// Put Legend On Screen
+for(var i = 0; i < identifiedCourseNames.length ; i++) {
+  var myHtmlContent = `
+  <tr class="Courses">
+    <td  class="Coursecode">` + identifiedCourses[i] + `</td>
+    <td  class="coursename">` + identifiedCourseNames[i] + `</td>
+  </tr>`;
+  var tableRef = document.getElementById('legend').getElementsByTagName('tbody')[0];
+  var newRow = tableRef.insertRow(tableRef.rows.length);
+  newRow.innerHTML = myHtmlContent;  
 }
 // noMatchFound.forEach((course) => {
 // 	var node = document.createTextNode(course + " ");
@@ -266,6 +286,7 @@ document
             o.email = user.email;
             o.token = token;
             o.identifiedCourses = identifiedCourses;
+            o.identifiedCourseNames = identifiedCourseNames;
             o.identifiedSegments = identifiedSegments;
             o.identifiedSlots = identifiedSlots;
             docRef.update(o);
@@ -274,6 +295,7 @@ document
             o.email = user.email;
             o.token = token;
             o.identifiedCourses = identifiedCourses;
+            o.identifiedCourseNames = identifiedCourseNames;
             o.identifiedSegments = identifiedSegments;
             o.identifiedSlots = identifiedSlots;
             docRef.set(o);
