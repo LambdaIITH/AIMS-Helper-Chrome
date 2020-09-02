@@ -49,6 +49,11 @@ add_checkboxes = function(){
 }
 
 show_total_gpa = function(){
+
+    if (document.location.href !== "https://aims.iith.ac.in/aims/courseReg/myCrsHistoryPage") {
+        return null;
+    }
+
     var courses = [];
     $('#gpa_button').val('Calculating');
     $('#gpa_bar').remove();
