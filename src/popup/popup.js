@@ -1,10 +1,21 @@
 
 var whichButton = 0 ; // 0 : no button has been clicked
+
+// Show the error message div
+function showError() {
+    document.getElementById("error-message").style.display = "block";
+    document.getElementsByClassName("button-container")[0].style.display = "none";
+    document.getElementById("loading-image").style.display = "none";
+}
+
+
 chrome.runtime.onMessage.addListener((request, sender) => {
-	if (request.action == "activateTimetable" && request.status == true)
-	{
-		onWindowLoad();
-	}
+    if (request.action == "activateTimetable" && request.status == true) {
+        onWindowLoad();
+    }
+    else {
+        showError();
+    }
 });
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "getSource") {
@@ -38,19 +49,29 @@ function onWindowLoad() {
 function showLoading() {
     document.getElementById("loading-image").style.display = "block";
     document.getElementsByClassName("button-container")[0].style.display="none";
+    document.getElementById("error-message").style.display = "none"; // adding to avoid any risks!
 }
 
 function removeLoading() {
     document.getElementById("loading-image").style.display = "none";
     document.getElementsByClassName("button-container")[0].style.display = "block";
+    document.getElementById("error-message").style.display = "none"; // adding to avoid any risks!
 }
 
 function injectTimetable() {
     showLoading();
 	chrome.tabs.executeScript(null, {
 		file: "/src/timetable/activateTimetable.js"
-	}, function() {
-		if (chrome.runtime.lastError)	console.log(chrome.runtime.lastError.message);
+    }, function () {
+        if (chrome.runtime.lastError) {
+            switch (chrome.runtime.lastError.message) {
+                case "Cannot access a chrome:// URL":
+                    showError();
+                    break;
+                default:
+                    console.log(chrome.runtime.lastError.message);
+            }
+        }
 	});
 }
 
@@ -68,6 +89,11 @@ function injectGPA() {
 }
 chrome.runtime.onMessage.addListener(function(request, sender){
     if(request.action == "parsedGPA"){
+
+        if (!request.data) {
+            return showError();
+        }
+
         removeLoading();
         var gpa_value = request.data.gpa;
         document.getElementsByClassName("gpa-container")[0].style.display = "flex";
