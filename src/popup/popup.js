@@ -69,9 +69,9 @@ function injectGPA() {
 chrome.runtime.onMessage.addListener(function(request, sender){
     if(request.action == "parsedGPA"){
         removeLoading();
-        var gpa_value = request.data.gpa;
+        var gpaValue = request.data.gpa;
         document.getElementsByClassName("gpa-container")[0].style.display = "flex";
-        document.getElementsByClassName("gpa-value")[0].innerText = gpa_value;
+        document.getElementsByClassName("gpa-value")[0].innerText = gpaValue;
         //TODO: use the courses and GPA to display in another tab.
 
         localStorage.setItem("courseGPA", JSON.stringify(request.data));

@@ -97,10 +97,10 @@ function getAllIndexes(arr, val) {
 
 var parser = new DOMParser();
 var DOM = parser.parseFromString(localStorage.getItem("DOM"), "text/html");
-var data_deg_dtl = DOM.getElementsByClassName("studentDegDtls")[0].getAttribute(
+var dataDegDtl = DOM.getElementsByClassName("studentDegDtls")[0].getAttribute(
   "data-deg-dtl"
 );
-var studentDegreeString = "stdntDeg_x_" + data_deg_dtl + "_1"; // Course Div String (x represents the serial number of the course)
+var studentDegreeString = "stdntDeg_x_" + dataDegDtl + "_1"; // Course Div String (x represents the serial number of the course)
 var noMatchFound = [];
 var currentID = 1;
 var identifiedCourses = [];
@@ -108,8 +108,8 @@ var identifiedSlots = [];
 var identifiedSegments = [];
 
 while (true) {
-  var courseCodeID = "cCd_" + currentID + "_" + data_deg_dtl + "_1";
-  var timetableRowsClass = "timeTabTr_" + currentID + "_" + data_deg_dtl + "_1";
+  var courseCodeID = "cCd_" + currentID + "_" + dataDegDtl + "_1";
+  var timetableRowsClass = "timeTabTr_" + currentID + "_" + dataDegDtl + "_1";
   var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
   var currentCourseCodeInput = DOM.getElementById(courseCodeID);
   if (currentCourseCodeInput == null) break;

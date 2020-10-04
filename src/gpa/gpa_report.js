@@ -6,43 +6,43 @@ document.getElementsByClassName("value name")[0].innerText = data.name;
 document.getElementsByClassName("value cgpa")[0].innerText = data.gpa;
 document.getElementsByClassName("value rollno")[0].innerText = data.rollno;
 document.getElementsByClassName("value branch")[0].innerText = data.branch;
-document.getElementsByClassName("value student-type")[0].innerText = data.student_type;
+document.getElementsByClassName("value student-type")[0].innerText = data.studentType;
 
 
-var summary_table = document.getElementsByClassName("summary")[0];
-var total_credits = 0;
+var summaryTable = document.getElementsByClassName("summary")[0];
+var totalCredits = 0;
 //right now the code in other file is such that the excluded courses are not reaching here.
-var type_credits_map = new Map(JSON.parse(data.type_credits_map));
-for(var [type, credits] of type_credits_map.entries()) {
+var typeCreditsMap = new Map(JSON.parse(data.typeCreditsMap));
+for(var [type, credits] of typeCreditsMap.entries()) {
     var row = document.createElement("tr");
     console.log(type, credits);
-    total_credits += credits;
+    totalCredits += credits;
     row.innerHTML = `<td>${type}</td><td class="credits">${credits}</td>`;
-    summary_table.appendChild(row);
+    summaryTable.appendChild(row);
 }
-var total_row = document.createElement("tr");
-total_row.className = "total";
-total_row.innerHTML = `<td>Total</td><td class="credits">${total_credits}</td>`;
-summary_table.appendChild(total_row);
+var totalRow = document.createElement("tr");
+totalRow.className = "total";
+totalRow.innerHTML = `<td>Total</td><td class="credits">${totalCredits}</td>`;
+summaryTable.appendChild(totalRow);
 console.log(data);
 
 
-var courses_table = document.getElementsByClassName("courses")[0];
-var courses_array = JSON.parse(data.courses);
-courses_array.sort(function(a, b){
+var coursesTable = document.getElementsByClassName("courses")[0];
+var coursesArray = JSON.parse(data.courses);
+coursesArray.sort(function(a, b){
     if (a.code < b.code)
         return -1;
     if (a.code > b.code)
         return 1;
     else return 0;
 });
-for (var course of courses_array) {
+for (var course of coursesArray) {
     var row = document.createElement("tr");
     row.innerHTML = `<td>${course.code}</td>
                      <td>${course.name}</td>
                      <td class="credits">${course.credits}</td>
                      <td class="credits">${course.grade}</td>`;
-    courses_table.appendChild(row);
+    coursesTable.appendChild(row);
 }
 
 
