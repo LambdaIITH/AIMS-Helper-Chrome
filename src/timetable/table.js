@@ -1,3 +1,9 @@
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+import html2pdf from 'html2pdf.js';
+
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const slots = [
   '09:00-09:55',
