@@ -8,20 +8,47 @@ var excludeList = [
   'Honours project',
   'Honours coursework',
   'FCC',
-  'Additional'
+  'Additional',
 ];
+
 var gradeValues = {
   'A+': 10,
-  'A': 10,
+  A: 10,
   'A-': 9,
-  'B': 8,
+  B: 8,
   'B-': 7,
-  'C': 6,
+  C: 6,
   'C-': 5,
-  'D': 4,
-  'FR': 0,
-  'FS': 0
+  D: 4,
+  FR: 0,
+  FS: 0,
 };
+// console.log(studentId);
+append_checkbox = function (parent, is_checked) {
+  parent.append(`<input class="cgpa_cal_check" type="checkbox" ${is_checked ? 'checked' : ''} />`);
+};
+add_checkboxes = function () {
+  const courses_checked = new Set();
+  $('.cgpa_cal_check').remove();
+  elems = $('.hierarchyLi.dataLi').not('.hierarchyHdr, .hierarchySubHdr');
+  elems.each(function (i) {
+    const course_id = $(this).children('.col1').html().trim();
+    if (courses_checked.has(course_id)) {
+      append_checkbox($(this).children('.col1'), false);
+      return;
+    }
+    is_checked = true;
+    type = $(this).children('.col5').html().trim()
+      .slice(6);
+    grade = $(this).children('.col8').html().trim()
+      .slice(6);
+    console.log(grade, grade.length);
+    if (exclude_list.indexOf(type) > -1 || grade == '' || grade == 'I') { is_checked = false; }
+    if (is_checked) { courses_checked.add(course_id); }
+    append_checkbox($(this).children('.col1'), is_checked);
+  });
+};
+
 //console.log(studentId);
 appendCheckbox = function(parent, isChecked){
     parent.append("<input class=\"cgpa_cal_check\" type=\"checkbox\" "+(isChecked?"checked":"")+" />");
@@ -78,6 +105,7 @@ showTotalGpa = function(){
         else
           typeCreditsMap.set(course.type, course.credits);
 
+    if (type_credits_map.has(course.type)) { type_credits_map.set(course.type, type_credits_map.get(course.type) + course.credits); } else { type_credits_map.set(course.type, course.credits); }
 
         gradeValue = gradeValues[course.grade];
         credits = course.credits;

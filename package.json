@@ -1,0 +1,42 @@
+{
+  "name": "aims-helper-chrome",
+  "version": "1.0.0",
+  "description": "The Google Chrome version of a cross-browser helper extension for the **AIMS Portal**, IIT Hyderabad. It is available at https://chrome.google.com/webstore/detail/aims-helper/njgpoifkefbbhjohcadcngdomfifcflj?hl=en.",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iith-dashboard/AIMS-Helper-Chrome.git"
+  },
+  "author": "Lambda IIT Hyderabad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iith-dashboard/AIMS-Helper-Chrome/issues"
+  },
+  "homepage": "https://github.com/iith-dashboard/AIMS-Helper-Chrome#readme",
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{json,css,scss,md,html}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "firebase": "^7.22.1",
+    "html2pdf.js": "^0.9.2"
+  }
+}

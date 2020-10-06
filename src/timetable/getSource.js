@@ -1,5 +1,5 @@
 // This function DOMtoString() converts the Document object into a String, this is done
-// because chrome.runtime.sendMessage() only works with strings and other JSON-serializable objects. 
+// because chrome.runtime.sendMessage() only works with strings and other JSON-serializable objects.
 
 function DOMtoString(documentRoot) {
     var html = '',
@@ -25,11 +25,12 @@ function DOMtoString(documentRoot) {
         }
         node = node.nextSibling;
     }
-    return html;
+    node = node.nextSibling;
+  }
+  return html;
 }
 
 chrome.runtime.sendMessage({
-    action: "getSource",
-    source: DOMtoString(document)
+  action: 'getSource',
+  source: DOMtoString(document),
 });
-
