@@ -101,23 +101,24 @@ function getAllIndexes(arr, val) {
   return indexes;
 }
 
-const parser = new DOMParser();
-const DOM = parser.parseFromString(localStorage.getItem('DOM'), 'text/html');
-const data_deg_dtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute(
-  'data-deg-dtl',
+var parser = new DOMParser();
+var DOM = parser.parseFromString(localStorage.getItem("DOM"), "text/html");
+var dataDegDtl = DOM.getElementsByClassName("studentDegDtls")[0].getAttribute(
+  "data-deg-dtl"
 );
-const studentDegreeString = `stdntDeg_x_${data_deg_dtl}_1`; // Course Div String (x represents the serial number of the course)
-const noMatchFound = [];
-let currentID = 1;
-const identifiedCourses = [];
-const identifiedSlots = [];
-const identifiedSegments = [];
+var studentDegreeString = "stdntDeg_x_" + dataDegDtl + "_1"; // Course Div String (x represents the serial number of the course)
+var noMatchFound = [];
+var currentID = 1;
+var identifiedCourses = [];
+var identifiedSlots = [];
+var identifiedSegments = [];
 
 while (true) {
-  const courseCodeID = `cCd_${currentID}_${data_deg_dtl}_1`;
-  const timetableRowsClass = `timeTabTr_${currentID}_${data_deg_dtl}_1`;
-  const currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
-  const currentCourseCodeInput = DOM.getElementById(courseCodeID);
+  var courseCodeID = "cCd_" + currentID + "_" + dataDegDtl + "_1";
+  var timetableRowsClass = "timeTabTr_" + currentID + "_" + dataDegDtl + "_1";
+  var currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
+  var currentCourseCodeInput = DOM.getElementById(courseCodeID);
+
   if (currentCourseCodeInput == null) break;
   if (currentCourseCodeInput.getAttribute('title') == null) {
     currentCourseCodeInput.setAttribute(
