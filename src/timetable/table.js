@@ -21,33 +21,33 @@ days.forEach((item) => {
   slotIndex[item] = {};
 });
 
-const allPossibilities = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'W',
-  'X',
-  'Y',
-  'Z',
-  'FN1',
-  'FN2',
-  'FN3',
-  'FN4',
-  'FN5',
-  'AN1',
-  'AN2',
-  'AN4',
-  'AN5',
-  'CL',
-];
+// const allPossibilities = [
+//   'A',
+//   'B',
+//   'C',
+//   'D',
+//   'E',
+//   'F',
+//   'G',
+//   'P',
+//   'Q',
+//   'R',
+//   'S',
+//   'W',
+//   'X',
+//   'Y',
+//   'Z',
+//   'FN1',
+//   'FN2',
+//   'FN3',
+//   'FN4',
+//   'FN5',
+//   'AN1',
+//   'AN2',
+//   'AN4',
+//   'AN5',
+//   'CL',
+// ];
 
 slotIndex.Monday['09:00-09:55'] = ['A', 'FN1'];
 slotIndex.Monday['10:00-10:55'] = ['B', 'FN1'];
@@ -103,10 +103,10 @@ function getAllIndexes(arr, val) {
 
 const parser = new DOMParser();
 const DOM = parser.parseFromString(localStorage.getItem('DOM'), 'text/html');
-const data_deg_dtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute(
+const dataDegDtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute(
   'data-deg-dtl',
 );
-const studentDegreeString = `stdntDeg_x_${data_deg_dtl}_1`; // Course Div String (x represents the serial number of the course)
+const studentDegreeString = `stdntDeg_x_${dataDegDtl}_1`; // Course Div String (x represents the serial number of the course)
 const noMatchFound = [];
 let currentID = 1;
 const identifiedCourses = [];
@@ -114,8 +114,8 @@ const identifiedSlots = [];
 const identifiedSegments = [];
 
 while (true) {
-  const courseCodeID = `cCd_${currentID}_${data_deg_dtl}_1`;
-  const timetableRowsClass = `timeTabTr_${currentID}_${data_deg_dtl}_1`;
+  const courseCodeID = `cCd_${currentID}_${dataDegDtl}_1`;
+  const timetableRowsClass = `timeTabTr_${currentID}_${dataDegDtl}_1`;
   const currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
   const currentCourseCodeInput = DOM.getElementById(courseCodeID);
   if (currentCourseCodeInput == null) break;
@@ -142,14 +142,14 @@ while (true) {
   let counterSegment = parseInt(currentSegmentStart, 10);
   while (counterSegment <= parseInt(currentSegmentEnd, 10)) {
     segmentString += counterSegment.toString();
-    counterSegment++;
+    counterSegment += 1;
   }
   // Get the list of prospective slots from the first entry.
-  var day = currentTimetableRows[0]
+  let day = currentTimetableRows[0]
     .getElementsByClassName('ttd2')[0]
     .getElementsByTagName('span')[1]
     .textContent.split('-')[0];
-  var time = `${currentTimetableRows[0]
+  let time = `${currentTimetableRows[0]
     .getElementsByClassName('ttd2')[0]
     .getElementsByTagName('span')[1]
     .textContent.split('-')[1]
@@ -159,24 +159,24 @@ while (true) {
       .getElementsByTagName('span')[1]
       .textContent.split('-')[2]}`;
   let possibilities = slotIndex[day][time];
-  for (var i = 1; i < currentTimetableRows.length; i++) {
-    var day = currentTimetableRows[i]
+  currentTimetableRows.every((row) => {
+    day = row
       .getElementsByClassName('ttd2')[0]
       .getElementsByTagName('span')[1]
       .textContent.split('-')[0];
-    var time = `${currentTimetableRows[i]
+    time = `${row
       .getElementsByClassName('ttd2')[0]
       .getElementsByTagName('span')[1]
       .textContent.split('-')[1]
     }-${
-      currentTimetableRows[i]
+      row
         .getElementsByClassName('ttd2')[0]
         .getElementsByTagName('span')[1]
         .textContent.split('-')[2]}`;
-    var newPossibilities = [];
+    const newPossibilities = [];
     if (!possibilities || !slotIndex[day][time]) {
       noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
-      break;
+      return false;
     }
     possibilities.forEach((possibility) => {
       if (slotIndex[day][time].includes(possibility)) {
@@ -184,12 +184,13 @@ while (true) {
       }
     });
     possibilities = newPossibilities;
-    if (possibilities.length == 0) {
-      break;
+    if (possibilities.length === 0) {
+      return false;
     }
-  }
+    return true;
+  });
   if (possibilities) {
-    if (possibilities.length == 1) {
+    if (possibilities.length === 1) {
       identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
       identifiedSlots.push(possibilities[0]);
       identifiedSegments.push(segmentString);
@@ -228,6 +229,13 @@ for (var i = 0; i < days.length; i++) {
     }
   }
 }
+days.forEach((day) => {
+  slots.forEach((slot) => {
+    if (slotIndex[day][slot]) {
+
+    }
+  });
+});
 // noMatchFound.forEach((course) => {
 // 	var node = document.createTextNode(course + " ");
 // 	document.getElementsByClassName("warning")[0].appendChild(node);
@@ -287,12 +295,6 @@ document
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const { email } = error;
-        // The firebase.auth.AuthCredential type that was used.
-        const { credential } = error;
-        // ...
         console.log(`Eror${errorCode}`);
       });
   });

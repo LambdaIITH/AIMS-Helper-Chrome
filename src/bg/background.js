@@ -10,7 +10,6 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 // This Listener listens to the Timetable Button click event
-chrome.runtime.onMessage.addListener((request, sender) => {
-    if (request.action == 'LaunchTimetableFile') { chrome.tabs.create({ url: chrome.runtime.getURL('/src/timetable/table.html') }); }
-  }
-);
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === 'LaunchTimetableFile') { chrome.tabs.create({ url: chrome.runtime.getURL('/src/timetable/table.html') }); }
+});

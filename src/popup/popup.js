@@ -1,34 +1,28 @@
 let whichButton = 0; // 0 : no button has been clicked
-chrome.runtime.onMessage.addListener((request, sender) => {
-  if (request.action == 'activateTimetable' && request.status == true) {
-    onWindowLoad();
-  }
-});
-chrome.runtime.onMessage.addListener((request, sender) => {
-  if (request.action == 'getSource') {
-    if (whichButton == 1) {
-    	localStorage.setItem('DOM', request.source);
-    	chrome.runtime.sendMessage({
-    		action: 'LaunchTimetableFile',
-    		source: 'hello',
-    	}, (data) => {
-    		console.log(chrome.runtime.lastError.message);
-    	});
-    } else {
-    	console.log("You shouldn't be here. "); // Um, just like that.
-    }
-  }
-});
 
 function onWindowLoad() {
   chrome.tabs.executeScript(null, {
     file: '/src/timetable/getSource.js',
-  }, () => {
-    if (chrome.runtime.lastError) {
-      console.log(chrome.runtime.lastError.message);
-    }
   });
 }
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === 'activateTimetable' && request.status === true) {
+    onWindowLoad();
+  }
+});
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === 'getSource') {
+    if (whichButton === 1) {
+      localStorage.setItem('DOM', request.source);
+      chrome.runtime.sendMessage({
+        action: 'LaunchTimetableFile',
+        source: 'hello',
+      });
+    }
+  }
+});
 
 function showLoading() {
   document.getElementById('loading-image').style.display = 'block';
@@ -44,8 +38,6 @@ function injectTimetable() {
   showLoading();
   chrome.tabs.executeScript(null, {
     file: '/src/timetable/activateTimetable.js',
-  }, () => {
-    if (chrome.runtime.lastError)	console.log(chrome.runtime.lastError.message);
   });
 }
 
@@ -53,31 +45,32 @@ function injectGPA() {
   showLoading();
   chrome.tabs.executeScript(null, {
     file: '/js/jquery-3.4.1.min.js',
-  }, (result) => {
+  }, () => {
     chrome.tabs.executeScript(null, {
       file: '/src/gpa/activateGPA.js',
-    }, () => {
-      if (chrome.runtime.lastError) console.log(chrome.runtime.lastError.message);
     });
   });
 }
-chrome.runtime.onMessage.addListener((request, sender) => {
-  if (request.action == 'parsedGPA') {
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === 'parsedGPA') {
     removeLoading();
-    const gpa_value = request.data.gpa;
+    const gpaValue = request.data.gpa;
     document.getElementsByClassName('gpa-container')[0].style.display = 'flex';
-    document.getElementsByClassName('gpa-value')[0].innerText = gpa_value;
+    document.getElementsByClassName('gpa-value')[0].innerText = gpaValue;
     // TODO: use the courses and GPA to display in another tab.
 
     localStorage.setItem('courseGPA', JSON.stringify(request.data));
     chrome.tabs.create({ url: chrome.runtime.getURL('/src/gpa/gpa_report.html') });
   }
 });
-document.getElementsByClassName('generate-timetable-button')[0].onclick = function () {
+
+document.getElementsByClassName('generate-timetable-button')[0].onclick = () => {
   whichButton = 1; // timetable button click event
   injectTimetable();
 };
-document.getElementsByClassName('calculate-gpa-button')[0].onclick = function () {
+
+document.getElementsByClassName('calculate-gpa-button')[0].onclick = () => {
   whichButton = 2; // GPA Button click event
   injectGPA();
 };

@@ -1,9 +1,9 @@
 // This function DOMtoString() converts the Document object into a String, this is done
 // because chrome.runtime.sendMessage() only works with strings and other JSON-serializable objects.
 
-function DOMtoString(document_root) {
+function DOMtoString(documentRoot) {
   let html = '';
-  let node = document_root.firstChild;
+  let node = documentRoot.firstChild;
   while (node) {
     switch (node.nodeType) {
       case Node.ELEMENT_NODE:
@@ -21,6 +21,8 @@ function DOMtoString(document_root) {
       case Node.DOCUMENT_TYPE_NODE:
         // (X)HTML documents are identified by public identifiers
         html += `<!DOCTYPE ${node.name}${node.publicId ? ` PUBLIC "${node.publicId}"` : ''}${!node.publicId && node.systemId ? ' SYSTEM' : ''}${node.systemId ? ` "${node.systemId}"` : ''}>\n`;
+        break;
+      default:
         break;
     }
     node = node.nextSibling;
