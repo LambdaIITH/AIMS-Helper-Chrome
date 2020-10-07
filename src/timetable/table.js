@@ -94,9 +94,10 @@ slotIndex.Friday['19:00-20:30'] = ['Z'];
 
 function getAllIndexes(arr, val) {
   const indexes = [];
-  let i = -1;
-  while ((i = arr.indexOf(val, i + 1)) != -1) {
+  let i = arr.indexOf(val, 0);
+  while (i !== -1) {
     indexes.push(i);
+    i = arr.indexOf(val, i + 1);
   }
   return indexes;
 }
@@ -106,7 +107,7 @@ const DOM = parser.parseFromString(localStorage.getItem('DOM'), 'text/html');
 const dataDegDtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute(
   'data-deg-dtl',
 );
-const studentDegreeString = `stdntDeg_x_${dataDegDtl}_1`; // Course Div String (x represents the serial number of the course)
+// const studentDegreeString = `stdntDeg_x_${dataDegDtl}_1`;
 const noMatchFound = [];
 let currentID = 1;
 const identifiedCourses = [];
@@ -201,23 +202,19 @@ while (true) {
   }
   currentID += 1;
 }
-// Add warning about noMatchFound
-console.log(identifiedCourses);
-// Actually Put Timetable On Screen
-for (var i = 0; i < days.length; i++) {
-  for (var j = 0; j < slots.length; j++) {
-    if (slotIndex[days[i]][slots[j]]) {
-      slotIndex[days[i]][slots[j]].forEach((slotCode) => {
-        indices = getAllIndexes(identifiedSlots, slotCode);
+days.forEach((day, i) => {
+  slots.forEach((slot, j) => {
+    if (slotIndex[day][slot]) {
+      slotIndex[day][slot].forEach((slotCode) => {
+        const indices = getAllIndexes(identifiedSlots, slotCode);
         indices.forEach((index) => {
-          mainSegment = 0;
           const querySegments = identifiedSegments[index].length / 2;
           let startSegment = parseInt(identifiedSegments[index][0], 10) + 1;
-          for (let k = 1; k <= querySegments; k++) {
-            dayint = i + 1;
-            slotint = j + 1;
-            segmentint = parseInt(startSegment / 2);
-            queryString = `${dayint.toString()
+          for (let k = 1; k <= querySegments; k += 1) {
+            const dayint = i + 1;
+            const slotint = j + 1;
+            const segmentint = parseInt(startSegment / 2, 10);
+            const queryString = `${dayint.toString()
             }-${
               segmentint.toString()
             }-${
@@ -228,18 +225,12 @@ for (var i = 0; i < days.length; i++) {
         });
       });
     }
-  }
-}
-days.forEach((day) => {
-  slots.forEach((slot) => {
-    if (slotIndex[day][slot]) {
-
-    }
   });
 });
+
 // noMatchFound.forEach((course) => {
-// 	var node = document.createTextNode(course + " ");
-// 	document.getElementsByClassName("warning")[0].appendChild(node);
+// var node = document.createTextNode(course + " ");
+// document.getElementsByClassName("warning")[0].appendChild(node);
 // });
 document.addEventListener('DOMContentLoaded', () => {
   document
