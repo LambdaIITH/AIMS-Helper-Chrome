@@ -62,13 +62,13 @@ function injectGPA() {
   });
 }
 
-chrome.runtime.onMessage.addListener(function(request, sender){
-    if(request.action == "parsedGPA"){
-        removeLoading();
-        var gpaValue = request.data.gpa;
-        document.getElementsByClassName("gpa-container")[0].style.display = "flex";
-        document.getElementsByClassName("gpa-value")[0].innerText = gpaValue;
-        //TODO: use the courses and GPA to display in another tab.
+chrome.runtime.onMessage.addListener((request, sender) => {
+  if (request.action == 'parsedGPA') {
+    removeLoading();
+    const gpaValue = request.data.gpa;
+    document.getElementsByClassName('gpa-container')[0].style.display = 'flex';
+    document.getElementsByClassName('gpa-value')[0].innerText = gpaValue;
+    // TODO: use the courses and GPA to display in another tab.
 
     localStorage.setItem('courseGPA', JSON.stringify(request.data));
     chrome.tabs.create({ url: chrome.runtime.getURL('/src/gpa/gpa_report.html') });
