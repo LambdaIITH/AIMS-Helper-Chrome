@@ -6,7 +6,7 @@ document.getElementsByClassName('value name')[0].innerText = data.name;
 document.getElementsByClassName('value cgpa')[0].innerText = data.gpa;
 document.getElementsByClassName('value rollno')[0].innerText = data.rollno;
 document.getElementsByClassName('value branch')[0].innerText = data.branch;
-document.getElementsByClassName('value student-type')[0].innerText = data.student_type;
+document.getElementsByClassName('value student-type')[0].innerText = data.studentType;
 
 const summaryTable = document.getElementsByClassName('summary')[0];
 let totalCredits = 0;

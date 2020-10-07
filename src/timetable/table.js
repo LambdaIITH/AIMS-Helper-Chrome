@@ -118,6 +118,7 @@ while (true) {
   const timetableRowsClass = `timeTabTr_${currentID}_${dataDegDtl}_1`;
   const currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
   const currentCourseCodeInput = DOM.getElementById(courseCodeID);
+
   if (currentCourseCodeInput == null) break;
   if (currentCourseCodeInput.getAttribute('title') == null) {
     currentCourseCodeInput.setAttribute(
