@@ -132,75 +132,79 @@ while (true) {
   if (!currentTimetableRows[0].getElementsByClassName('ttd1')[0]) {
     currentID += 1;
     noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
-    continue;
-  }
-  const currentSegmentStart = currentTimetableRows[0]
-    .getElementsByClassName('ttd1')[0]
-    .textContent.split('-')[0];
+  } else {
+    const currentSegmentStart = currentTimetableRows[0]
+      .getElementsByClassName('ttd1')[0]
+      .textContent.split('-')[0];
 
-  const currentSegmentEnd = currentTimetableRows[0]
-    .getElementsByClassName('ttd1')[0]
-    .textContent.split('-')[1];
-  let counterSegment = parseInt(currentSegmentStart, 10);
-  while (counterSegment <= parseInt(currentSegmentEnd, 10)) {
-    segmentString += counterSegment.toString();
-    counterSegment += 1;
-  }
-  // Get the list of prospective slots from the first entry.
-  let day = currentTimetableRows[0]
-    .getElementsByClassName('ttd2')[0]
-    .getElementsByTagName('span')[1]
-    .textContent.split('-')[0];
-  let time = `${currentTimetableRows[0]
-    .getElementsByClassName('ttd2')[0]
-    .getElementsByTagName('span')[1]
-    .textContent.split('-')[1]
-  }-${
-    currentTimetableRows[0]
-      .getElementsByClassName('ttd2')[0]
-      .getElementsByTagName('span')[1]
-      .textContent.split('-')[2]}`;
-  let possibilities = slotIndex[day][time];
-  currentTimetableRows.every((row) => {
-    day = row
+    const currentSegmentEnd = currentTimetableRows[0]
+      .getElementsByClassName('ttd1')[0]
+      .textContent.split('-')[1];
+    let counterSegment = parseInt(currentSegmentStart, 10);
+    while (counterSegment <= parseInt(currentSegmentEnd, 10)) {
+      segmentString += counterSegment.toString();
+      counterSegment += 1;
+    }
+    // Get the list of prospective slots from the first entry.
+    let day = currentTimetableRows[0]
       .getElementsByClassName('ttd2')[0]
       .getElementsByTagName('span')[1]
       .textContent.split('-')[0];
-    time = `${row
-      .getElementsByClassName('ttd2')[0]
-      .getElementsByTagName('span')[1]
-      .textContent.split('-')[1]
-    }-${
-      row
+    let time = `${
+      currentTimetableRows[0]
         .getElementsByClassName('ttd2')[0]
         .getElementsByTagName('span')[1]
-        .textContent.split('-')[2]}`;
-    const newPossibilities = [];
-    if (!possibilities || !slotIndex[day][time]) {
-      noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
-      return false;
-    }
-    possibilities.forEach((possibility) => {
-      if (slotIndex[day][time].includes(possibility)) {
-        newPossibilities.push(possibility);
+        .textContent.split('-')[1]
+    }-${
+      currentTimetableRows[0]
+        .getElementsByClassName('ttd2')[0]
+        .getElementsByTagName('span')[1]
+        .textContent.split('-')[2]
+    }`;
+    let possibilities = slotIndex[day][time];
+    currentTimetableRows.every((row) => {
+      [day] = row
+        .getElementsByClassName('ttd2')[0]
+        .getElementsByTagName('span')[1]
+        .textContent.split('-');
+      time = `${
+        row
+          .getElementsByClassName('ttd2')[0]
+          .getElementsByTagName('span')[1]
+          .textContent.split('-')[1]
+      }-${
+        row
+          .getElementsByClassName('ttd2')[0]
+          .getElementsByTagName('span')[1]
+          .textContent.split('-')[2]
+      }`;
+      const newPossibilities = [];
+      if (!possibilities || !slotIndex[day][time]) {
+        noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
+        return false;
       }
+      possibilities.forEach((possibility) => {
+        if (slotIndex[day][time].includes(possibility)) {
+          newPossibilities.push(possibility);
+        }
+      });
+      possibilities = newPossibilities;
+      if (possibilities.length === 0) {
+        return false;
+      }
+      return true;
     });
-    possibilities = newPossibilities;
-    if (possibilities.length === 0) {
-      return false;
+    if (possibilities) {
+      if (possibilities.length === 1) {
+        identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
+        identifiedSlots.push(possibilities[0]);
+        identifiedSegments.push(segmentString);
+      } else {
+        noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
+      }
     }
-    return true;
-  });
-  if (possibilities) {
-    if (possibilities.length === 1) {
-      identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
-      identifiedSlots.push(possibilities[0]);
-      identifiedSegments.push(segmentString);
-    } else {
-      noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
-    }
+    currentID += 1;
   }
-  currentID += 1;
 }
 days.forEach((day, i) => {
   slots.forEach((slot, j) => {
@@ -214,11 +218,7 @@ days.forEach((day, i) => {
             const dayint = i + 1;
             const slotint = j + 1;
             const segmentint = parseInt(startSegment / 2, 10);
-            const queryString = `${dayint.toString()
-            }-${
-              segmentint.toString()
-            }-${
-              slotint.toString()}`;
+            const queryString = `${dayint.toString()}-${segmentint.toString()}-${slotint.toString()}`;
             document.getElementsByClassName(queryString)[0].textContent = identifiedCourses[index];
             startSegment += 2;
           }
