@@ -1,6 +1,8 @@
 function activate() {
   const timeTabIcons = document.getElementsByClassName('time_tab_icon');
-  timeTabIcons.forEach((icon) => icon.click());
+  for (let i = 0; i < timeTabIcons.length; i += 1) {
+    timeTabIcons[i].click();
+  }
   return true;
 }
 
