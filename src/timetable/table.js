@@ -1,8 +1,5 @@
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
-import html2pdf from 'html2pdf.js';
+// these are imported using script tag in table.html file.
+/* global html2pdf, firebase */
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const slots = [
@@ -146,11 +143,11 @@ while (true) {
       counterSegment += 1;
     }
     // Get the list of prospective slots from the first entry.
-    let day = currentTimetableRows[0]
+    const day = currentTimetableRows[0]
       .getElementsByClassName('ttd2')[0]
       .getElementsByTagName('span')[1]
       .textContent.split('-')[0];
-    let time = `${
+    const time = `${
       currentTimetableRows[0]
         .getElementsByClassName('ttd2')[0]
         .getElementsByTagName('span')[1]
@@ -162,38 +159,37 @@ while (true) {
         .textContent.split('-')[2]
     }`;
     let possibilities = slotIndex[day][time];
-    currentTimetableRows.every((row) => {
-      [day] = row
+    for (let i = 1; i < currentTimetableRows.length; i += 1) {
+      const day2 = currentTimetableRows[i]
         .getElementsByClassName('ttd2')[0]
         .getElementsByTagName('span')[1]
-        .textContent.split('-');
-      time = `${
-        row
+        .textContent.split('-')[0];
+      const time2 = `${
+        currentTimetableRows[i]
           .getElementsByClassName('ttd2')[0]
           .getElementsByTagName('span')[1]
           .textContent.split('-')[1]
       }-${
-        row
+        currentTimetableRows[i]
           .getElementsByClassName('ttd2')[0]
           .getElementsByTagName('span')[1]
           .textContent.split('-')[2]
       }`;
       const newPossibilities = [];
-      if (!possibilities || !slotIndex[day][time]) {
+      if (!possibilities || !slotIndex[day2][time2]) {
         noMatchFound.push(currentCourseCodeInput.getAttribute('title'));
-        return false;
+        break;
       }
       possibilities.forEach((possibility) => {
-        if (slotIndex[day][time].includes(possibility)) {
+        if (slotIndex[day2][time2].includes(possibility)) {
           newPossibilities.push(possibility);
         }
       });
       possibilities = newPossibilities;
       if (possibilities.length === 0) {
-        return false;
+        break;
       }
-      return true;
-    });
+    }
     if (possibilities) {
       if (possibilities.length === 1) {
         identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
