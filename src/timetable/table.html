@@ -1,272 +1,272 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Timetable | </title>
-	<style type="text/css">
-		@font-face {
-			font-family: Title;
-			src: url('/fonts/OpenSans-Light.ttf');
-		}
-		html {
-			background-color: #1F2739;
-		}
-		.main-heading {
-			font-family: Title;
-			font-size: 2.5rem;
-			text-align: center;
-			color: #3EBEFA;
-		}
-		table {
-			font-family: Title;
-			text-align: center;
-			margin-left: auto;
-			margin-right: auto;
-			color: white;
-			font-size: 1.2rem;
-			border-collapse: collapse;
-		}
-		td {
-			border: 0.3px solid gray;
-			padding: 15px;
-			padding-top: 6px;
-			padding-bottom: 6px;
-		}
-		.buttons {
-			margin-top: 2.5%;
-			text-align:center;
-		}
-		button {
-			background: #1F2739;
-			border: 1px solid #3EBEFA;
-			color: white;
-			font-size: 1.2rem;
-			padding-left: 1.5%;
-			padding-right: 1.5%;
-			padding-top: 0.5%;
-			padding-bottom: 0.5%;
-			border-radius: 2px;
-			transition: 0.25s all;
-		}
-		button:hover {
-			border: 1px solid #f8f842;
-			color: #f8f842;
-		}
-		.differentColor {
-			color: #f8f842;
-		}
-	</style>
-</head>
-<body>
-	<p class="main-heading">Your Timetable</span></p>
-	<table border=1 id="timetable">
-		<tr>
-			<td class="differentColor">Day</td>
-			<td class = "differentColor">Segment</td>
-			<td class = "differentColor">09:00-09:55</td>
-			<td class = "differentColor">10:00-10:55</td>
-			<td class = "differentColor">11:00-11:55</td>
-			<td class = "differentColor">12:00-12:55</td>
-			<td class = "differentColor">Lunch Break</td>
-			<td class = "differentColor">14:30-15:55</td>
-			<td class = "differentColor">16:00-17:25</td>
-			<td class = "differentColor">17:30-18:55</td>
-			<td class = "differentColor">19:00-20:30</td>
-		</tr>
-		<tr class="Monday-1">
-			<td  rowspan=3 class="differentColor">Monday</td>
-			<td >1</td>
-			<td  class="1-1-1"></td>
-			<td  class="1-1-2"></td>
-			<td  class="1-1-3"></td>
-			<td  class="1-1-4"></td>
-			<td  ></td>
-			<td  class="1-1-5"></td>
-			<td  class="1-1-6"></td>
-			<td  class="1-1-7"></td>
-			<td  class="1-1-8"></td>
-		</tr>
-		<tr class="Monday-2">
-			<td >2</td>
-			<td  class="1-2-1"></td>
-			<td  class="1-2-2"></td>
-			<td  class="1-2-3"></td>
-			<td  class="1-2-4"></td>
-			<td ></td>
-			<td  class="1-2-5"></td>
-			<td  class="1-2-6"></td>
-			<td  class="1-2-7"></td>
-			<td  class="1-2-8"></td>
-		</tr>
-		<tr class="Monday-3">
-			<td >3</td>
-			<td  class="1-3-1"></td>
-			<td  class="1-3-2"></td>
-			<td  class="1-3-3"></td>
-			<td  class="1-3-4"></td>
-			<td ></td>
-			<td  class="1-3-5"></td>
-			<td  class="1-3-6"></td>
-			<td  class="1-3-7"></td>
-			<td  class="1-3-8"></td>
-		</tr>
-		<tr class="Tuesday-1">
-			<td  rowspan=3 class="differentColor">Tuesday</td>
-			<td >1</td>
-			<td  class="2-1-1"></td>
-			<td  class="2-1-2"></td>
-			<td  class="2-1-3"></td>
-			<td  class="2-1-4"></td>
-			<td ></td>
-			<td  class="2-1-5"></td>
-			<td  class="2-1-6"></td>
-			<td  class="2-1-7"></td>
-			<td  class="2-1-8"></td>
-		</tr>
-		<tr class="Tuesday-2">
-			<td >2</td>
-			<td  class="2-2-1"></td>
-			<td  class="2-2-2"></td>
-			<td  class="2-2-3"></td>
-			<td  class="2-2-4"></td>
-			<td ></td>
-			<td  class="2-2-5"></td>
-			<td  class="2-2-6"></td>
-			<td  class="2-2-7"></td>
-			<td  class="2-2-8"></td>
-		</tr>
-		<tr class="Tuesday-3">
-			<td >3</td>
-			<td  class="2-3-1"></td>
-			<td  class="2-3-2"></td>
-			<td  class="2-3-3"></td>
-			<td  class="2-3-4"></td>
-			<td ></td>
-			<td  class="2-3-5"></td>
-			<td  class="2-3-6"></td>
-			<td  class="2-3-7"></td>
-			<td  class="2-3-8"></td>
-		</tr>
-		<tr class="Wednesday-1">
-			<td  rowspan=3 class="differentColor">Wednesday</td>
-			<td >1</td>
-			<td  class="3-1-1"></td>
-			<td  class="3-1-2"></td>
-			<td  class="3-1-3"></td>
-			<td  class="3-1-4"></td>
-			<td ></td>
-			<td  class="3-1-5"></td>
-			<td  class="3-1-6"></td>
-			<td  class="3-1-7"></td>
-			<td  class="3-1-8"></td>
-		</tr>
-		<tr class="Wednesday-2">
-			<td >2</td>
-			<td  class="3-2-1"></td>
-			<td  class="3-2-2"></td>
-			<td  class="3-2-3"></td>
-			<td  class="3-2-4"></td>
-			<td ></td>
-			<td  class="3-2-5"></td>
-			<td  class="3-2-6"></td>
-			<td  class="3-2-7"></td>
-			<td  class="3-2-8"></td>
-		</tr>
-		<tr class="Wednesday-3">
-			<td >3</td>
-			<td  class="3-3-1"></td>
-			<td  class="3-3-2"></td>
-			<td  class="3-3-3"></td>
-			<td  class="3-3-4"></td>
-			<td ></td>
-			<td  class="3-3-5"></td>
-			<td  class="3-3-6"></td>
-			<td  class="3-3-7"></td>
-			<td  class="3-3-8"></td>
-		</tr>
-		<tr class="Thursday-1">
-			<td  rowspan=3 class="differentColor">Thursday</td>
-			<td >1</td>
-			<td  class="4-1-1"></td>
-			<td  class="4-1-2"></td>
-			<td  class="4-1-3"></td>
-			<td  class="4-1-4"></td>
-			<td ></td>
-			<td  class="4-1-5"></td>
-			<td  class="4-1-6"></td>
-			<td  class="4-1-7"></td>
-			<td  class="4-1-8"></td>
-		</tr>
-		<tr class="Thursday-2">
-			<td >2</td>
-			<td  class="4-2-1"></td>
-			<td  class="4-2-2"></td>
-			<td  class="4-2-3"></td>
-			<td  class="4-2-4"></td>
-			<td ></td>
-			<td  class="4-2-5"></td>
-			<td  class="4-2-6"></td>
-			<td  class="4-2-7"></td>
-			<td  class="4-2-8"></td>
-		</tr>
-		<tr class="Thursday-3">
-			<td >3</td>
-			<td  class="4-3-1"></td>
-			<td  class="4-3-2"></td>
-			<td  class="4-3-3"></td>
-			<td  class="4-3-4"></td>
-			<td ></td>
-			<td  class="4-3-5"></td>
-			<td  class="4-3-6"></td>
-			<td  class="4-3-7"></td>
-			<td  class="4-3-8"></td>
-		</tr>
-		<tr class="Friday-1">
-			<td  rowspan=3 class="differentColor">Friday</td>
-			<td >1</td>
-			<td  class="5-1-1"></td>
-			<td  class="5-1-2"></td>
-			<td  class="5-1-3"></td>
-			<td  class="5-1-4"></td>
-			<td ></td>
-			<td  class="5-1-5"></td>
-			<td  class="5-1-6"></td>
-			<td  class="5-1-7"></td>
-			<td  class="5-1-8"></td>
-		</tr>
-		<tr class="Friday-2">
-			<td >2</td>
-			<td  class="5-2-1"></td>
-			<td  class="5-2-2"></td>
-			<td  class="5-2-3"></td>
-			<td  class="5-2-4"></td>
-			<td ></td>
-			<td  class="5-2-5"></td>
-			<td  class="5-2-6"></td>
-			<td  class="5-2-7"></td>
-			<td  class="5-2-8"></td>
-		</tr>
-		<tr class="Friday-3">
-			<td >3</td>
-			<td  class="5-3-1"></td>
-			<td  class="5-3-2"></td>
-			<td  class="5-3-3"></td>
-			<td  class="5-3-4"></td>
-			<td ></td>
-			<td  class="5-3-5"></td>
-			<td  class="5-3-6"></td>
-			<td  class="5-3-7"></td>
-			<td  class="5-3-8"></td>
-		</tr>
-	</table>
-	<br />
-	<div class="buttons">
-	<button class="download-pdf">Download PDF</button>&nbsp;&nbsp;&nbsp;
-	<button class="send-to-db">Upload timetable</button>
-	</div>
-	<script src="/js/firebase-app.js"></script>
-	<script src="/js/firebase-auth.js"></script>
-	<script src="/js/firebase-firestore.js"></script>	
-	<script src="/js/html2pdf.bundle.min.js"></script>
-	<script src="table.js"></script>
-</body>
+  <head>
+    <title>Timetable |</title>
+    <style type="text/css">
+      @font-face {
+        font-family: Title;
+        src: url("/fonts/OpenSans-Light.ttf");
+      }
+      html {
+        background-color: #1f2739;
+      }
+      .main-heading {
+        font-family: Title;
+        font-size: 2.5rem;
+        text-align: center;
+        color: #3ebefa;
+      }
+      table {
+        font-family: Title;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        font-size: 1.2rem;
+        border-collapse: collapse;
+      }
+      td {
+        border: 0.3px solid gray;
+        padding: 15px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+      .buttons {
+        margin-top: 2.5%;
+        text-align: center;
+      }
+      button {
+        background: #1f2739;
+        border: 1px solid #3ebefa;
+        color: white;
+        font-size: 1.2rem;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+        padding-top: 0.5%;
+        padding-bottom: 0.5%;
+        border-radius: 2px;
+        transition: 0.25s all;
+      }
+      button:hover {
+        border: 1px solid #f8f842;
+        color: #f8f842;
+      }
+      .differentColor {
+        color: #f8f842;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="main-heading">Your Timetable</p>
+    <table border="1" id="timetable">
+      <tr>
+        <td class="differentColor">Day</td>
+        <td class="differentColor">Segment</td>
+        <td class="differentColor">09:00-09:55</td>
+        <td class="differentColor">10:00-10:55</td>
+        <td class="differentColor">11:00-11:55</td>
+        <td class="differentColor">12:00-12:55</td>
+        <td class="differentColor">Lunch Break</td>
+        <td class="differentColor">14:30-15:55</td>
+        <td class="differentColor">16:00-17:25</td>
+        <td class="differentColor">17:30-18:55</td>
+        <td class="differentColor">19:00-20:30</td>
+      </tr>
+      <tr class="Monday-1">
+        <td rowspan="3" class="differentColor">Monday</td>
+        <td>1</td>
+        <td class="1-1-1"></td>
+        <td class="1-1-2"></td>
+        <td class="1-1-3"></td>
+        <td class="1-1-4"></td>
+        <td></td>
+        <td class="1-1-5"></td>
+        <td class="1-1-6"></td>
+        <td class="1-1-7"></td>
+        <td class="1-1-8"></td>
+      </tr>
+      <tr class="Monday-2">
+        <td>2</td>
+        <td class="1-2-1"></td>
+        <td class="1-2-2"></td>
+        <td class="1-2-3"></td>
+        <td class="1-2-4"></td>
+        <td></td>
+        <td class="1-2-5"></td>
+        <td class="1-2-6"></td>
+        <td class="1-2-7"></td>
+        <td class="1-2-8"></td>
+      </tr>
+      <tr class="Monday-3">
+        <td>3</td>
+        <td class="1-3-1"></td>
+        <td class="1-3-2"></td>
+        <td class="1-3-3"></td>
+        <td class="1-3-4"></td>
+        <td></td>
+        <td class="1-3-5"></td>
+        <td class="1-3-6"></td>
+        <td class="1-3-7"></td>
+        <td class="1-3-8"></td>
+      </tr>
+      <tr class="Tuesday-1">
+        <td rowspan="3" class="differentColor">Tuesday</td>
+        <td>1</td>
+        <td class="2-1-1"></td>
+        <td class="2-1-2"></td>
+        <td class="2-1-3"></td>
+        <td class="2-1-4"></td>
+        <td></td>
+        <td class="2-1-5"></td>
+        <td class="2-1-6"></td>
+        <td class="2-1-7"></td>
+        <td class="2-1-8"></td>
+      </tr>
+      <tr class="Tuesday-2">
+        <td>2</td>
+        <td class="2-2-1"></td>
+        <td class="2-2-2"></td>
+        <td class="2-2-3"></td>
+        <td class="2-2-4"></td>
+        <td></td>
+        <td class="2-2-5"></td>
+        <td class="2-2-6"></td>
+        <td class="2-2-7"></td>
+        <td class="2-2-8"></td>
+      </tr>
+      <tr class="Tuesday-3">
+        <td>3</td>
+        <td class="2-3-1"></td>
+        <td class="2-3-2"></td>
+        <td class="2-3-3"></td>
+        <td class="2-3-4"></td>
+        <td></td>
+        <td class="2-3-5"></td>
+        <td class="2-3-6"></td>
+        <td class="2-3-7"></td>
+        <td class="2-3-8"></td>
+      </tr>
+      <tr class="Wednesday-1">
+        <td rowspan="3" class="differentColor">Wednesday</td>
+        <td>1</td>
+        <td class="3-1-1"></td>
+        <td class="3-1-2"></td>
+        <td class="3-1-3"></td>
+        <td class="3-1-4"></td>
+        <td></td>
+        <td class="3-1-5"></td>
+        <td class="3-1-6"></td>
+        <td class="3-1-7"></td>
+        <td class="3-1-8"></td>
+      </tr>
+      <tr class="Wednesday-2">
+        <td>2</td>
+        <td class="3-2-1"></td>
+        <td class="3-2-2"></td>
+        <td class="3-2-3"></td>
+        <td class="3-2-4"></td>
+        <td></td>
+        <td class="3-2-5"></td>
+        <td class="3-2-6"></td>
+        <td class="3-2-7"></td>
+        <td class="3-2-8"></td>
+      </tr>
+      <tr class="Wednesday-3">
+        <td>3</td>
+        <td class="3-3-1"></td>
+        <td class="3-3-2"></td>
+        <td class="3-3-3"></td>
+        <td class="3-3-4"></td>
+        <td></td>
+        <td class="3-3-5"></td>
+        <td class="3-3-6"></td>
+        <td class="3-3-7"></td>
+        <td class="3-3-8"></td>
+      </tr>
+      <tr class="Thursday-1">
+        <td rowspan="3" class="differentColor">Thursday</td>
+        <td>1</td>
+        <td class="4-1-1"></td>
+        <td class="4-1-2"></td>
+        <td class="4-1-3"></td>
+        <td class="4-1-4"></td>
+        <td></td>
+        <td class="4-1-5"></td>
+        <td class="4-1-6"></td>
+        <td class="4-1-7"></td>
+        <td class="4-1-8"></td>
+      </tr>
+      <tr class="Thursday-2">
+        <td>2</td>
+        <td class="4-2-1"></td>
+        <td class="4-2-2"></td>
+        <td class="4-2-3"></td>
+        <td class="4-2-4"></td>
+        <td></td>
+        <td class="4-2-5"></td>
+        <td class="4-2-6"></td>
+        <td class="4-2-7"></td>
+        <td class="4-2-8"></td>
+      </tr>
+      <tr class="Thursday-3">
+        <td>3</td>
+        <td class="4-3-1"></td>
+        <td class="4-3-2"></td>
+        <td class="4-3-3"></td>
+        <td class="4-3-4"></td>
+        <td></td>
+        <td class="4-3-5"></td>
+        <td class="4-3-6"></td>
+        <td class="4-3-7"></td>
+        <td class="4-3-8"></td>
+      </tr>
+      <tr class="Friday-1">
+        <td rowspan="3" class="differentColor">Friday</td>
+        <td>1</td>
+        <td class="5-1-1"></td>
+        <td class="5-1-2"></td>
+        <td class="5-1-3"></td>
+        <td class="5-1-4"></td>
+        <td></td>
+        <td class="5-1-5"></td>
+        <td class="5-1-6"></td>
+        <td class="5-1-7"></td>
+        <td class="5-1-8"></td>
+      </tr>
+      <tr class="Friday-2">
+        <td>2</td>
+        <td class="5-2-1"></td>
+        <td class="5-2-2"></td>
+        <td class="5-2-3"></td>
+        <td class="5-2-4"></td>
+        <td></td>
+        <td class="5-2-5"></td>
+        <td class="5-2-6"></td>
+        <td class="5-2-7"></td>
+        <td class="5-2-8"></td>
+      </tr>
+      <tr class="Friday-3">
+        <td>3</td>
+        <td class="5-3-1"></td>
+        <td class="5-3-2"></td>
+        <td class="5-3-3"></td>
+        <td class="5-3-4"></td>
+        <td></td>
+        <td class="5-3-5"></td>
+        <td class="5-3-6"></td>
+        <td class="5-3-7"></td>
+        <td class="5-3-8"></td>
+      </tr>
+    </table>
+    <br />
+    <div class="buttons">
+      <button class="download-pdf">Download PDF</button>&nbsp;&nbsp;&nbsp;
+      <button class="send-to-db">Upload timetable</button>
+    </div>
+    <script src="/js/firebase-app.js"></script>
+    <script src="/js/firebase-auth.js"></script>
+    <script src="/js/firebase-firestore.js"></script>
+    <script src="/js/html2pdf.bundle.min.js"></script>
+    <script src="table.js"></script>
+  </body>
 </html>

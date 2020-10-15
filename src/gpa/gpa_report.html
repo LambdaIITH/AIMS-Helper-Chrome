@@ -4,63 +4,69 @@
     <title>GPA Report</title>
     <style type="text/css">
       @font-face {
-      font-family: Roboto;
-      src: url('/fonts/Roboto-Regular.ttf');
-    }
-      body{
+        font-family: Roboto;
+        src: url("/fonts/Roboto-Regular.ttf");
+      }
+      body {
         text-align: center;
         font-family: Roboto;
         font-size: 13px;
       }
-      .report{
+      .report {
         display: inline-block;
         text-align: left;
         margin-top: 30px;
         margin-left: 20px;
       }
-      .personal, .summary{
+      .personal,
+      .summary {
         margin-left: 50px;
         width: 600px;
         margin-top: 20px;
       }
-      .courses{
+      .courses {
         margin-left: 50px;
         width: 600px;
         margin-top: 20px;
       }
-      ul{
-        list-style:none;
-        margin-left:0;
-        padding-left:1em;
+      ul {
+        list-style: none;
+        margin-left: 0;
+        padding-left: 1em;
         /*text-indent:-1em;*/
       }
-      h1{
+      h1 {
         color: #552200;
       }
-      label{
+      label {
         padding: 3px 7px;
-        display:inline-block;
+        display: inline-block;
         width: 120px;
         margin-bottom: 5px;
       }
-      .courses, .summary, .courses th, .summary th, .courses td, .summary td{
+      .courses,
+      .summary,
+      .courses th,
+      .summary th,
+      .courses td,
+      .summary td {
         border: 2px solid #ff6600;
         border-collapse: collapse;
         padding: 3px 10px;
       }
-      .credits{
+      .credits {
         text-align: center;
       }
-      .total{
+      .total {
         font-weight: bold;
         color: #aa3300;
       }
-      .exclude{
+      .exclude {
         color: #333333;
       }
       button {
         color: #77220a;
-        background-color:#fee;
+        background-color: #fee;
         border: 1.2px solid #aa3300;
         padding-left: 1.5%;
         padding-right: 1.5%;
@@ -86,23 +92,23 @@
           <td><label>Name</label></td>
           <td><span class="value name"></span></td>
         </tr>
-          <tr>
-            <td><label>Roll Number</label></td>
-            <td><span class="value rollno"></span></td>
-          </tr>
-          <tr>
-            <td><label>Branch</label></td>
-            <td><span class="value branch"></span></td>
-          </tr>
-          <tr>
-            <td><label>Student Type</label></td>
-            <td><span class="value student-type"></span></td>
-          </tr>
-          <tr>
-            <td><label>CGPA</label></td>
-            <td><span class="value cgpa"></span></td>
-           </tr>
-        </table>
+        <tr>
+          <td><label>Roll Number</label></td>
+          <td><span class="value rollno"></span></td>
+        </tr>
+        <tr>
+          <td><label>Branch</label></td>
+          <td><span class="value branch"></span></td>
+        </tr>
+        <tr>
+          <td><label>Student Type</label></td>
+          <td><span class="value student-type"></span></td>
+        </tr>
+        <tr>
+          <td><label>CGPA</label></td>
+          <td><span class="value cgpa"></span></td>
+        </tr>
+      </table>
       <h1>Summary</h1>
       <table class="summary">
         <tr>
@@ -120,7 +126,7 @@
         </tr>
       </table>
     </div>
-    <br/>
+    <br />
     <button class="download-pdf">Download PDF</button>
     <script src="/js/html2pdf.bundle.min.js"></script>
     <script src="gpa_report.js"></script>
