@@ -108,20 +108,27 @@ const dataDegDtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute(
 const noMatchFound = [];
 let currentID = 1;
 const identifiedCourses = [];
+const identifiedCourseNames = [];
 const identifiedSlots = [];
 const identifiedSegments = [];
 
 while (true) {
   const courseCodeID = `cCd_${currentID}_${dataDegDtl}_1`;
+  const courseCodeName = `cDesc_${currentID}_${dataDegDtl}_1`;
   const timetableRowsClass = `timeTabTr_${currentID}_${dataDegDtl}_1`;
   const currentTimetableRows = DOM.getElementsByClassName(timetableRowsClass);
   const currentCourseCodeInput = DOM.getElementById(courseCodeID);
+  const currentCourseNameInput = DOM.getElementById(courseCodeName);
 
   if (currentCourseCodeInput == null) break;
   if (currentCourseCodeInput.getAttribute('title') == null) {
     currentCourseCodeInput.setAttribute(
       'title',
       currentCourseCodeInput.previousSibling.data,
+    );
+    currentCourseNameInput.setAttribute(
+      "title",
+      currentCourseNameInput.previousSibling.data
     );
   }
   // Get the course segment duration.getElements
@@ -193,6 +200,7 @@ while (true) {
     if (possibilities) {
       if (possibilities.length === 1) {
         identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
+        identifiedCourseNames.push(currentCourseNameInput.getAttribute("title"));
         identifiedSlots.push(possibilities[0]);
         identifiedSegments.push(segmentString);
       } else {
@@ -223,7 +231,17 @@ days.forEach((day, i) => {
     }
   });
 });
-
+// Put Legend On Screen
+identifiedCourseNames.forEach((courseName, i) => {
+  const myHtmlContent = `
+  <tr class="Courses">
+    <td class="Coursecode">${identifiedCourses[i]}</td>
+    <td class="coursename">${courseName}</td>
+  </tr>`;
+  const tableRef = document.getElementById('legend').getElementsByTagName('tbody')[0];
+  const newRow = tableRef.insertRow(tableRef.rows.length);
+  newRow.innerHTML = myHtmlContent;  
+});
 // noMatchFound.forEach((course) => {
 // var node = document.createTextNode(course + " ");
 // document.getElementsByClassName("warning")[0].appendChild(node);
@@ -265,6 +283,7 @@ document
             o.email = user.email;
             o.token = token;
             o.identifiedCourses = identifiedCourses;
+            o.identifiedCourseNames = identifiedCourseNames;
             o.identifiedSegments = identifiedSegments;
             o.identifiedSlots = identifiedSlots;
             docRef.update(o);
@@ -273,6 +292,7 @@ document
             o.email = user.email;
             o.token = token;
             o.identifiedCourses = identifiedCourses;
+            o.identifiedCourseNames = identifiedCourseNames;
             o.identifiedSegments = identifiedSegments;
             o.identifiedSlots = identifiedSlots;
             docRef.set(o);
