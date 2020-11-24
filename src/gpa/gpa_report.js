@@ -1,5 +1,3 @@
-import html2pdf from 'html2pdf.js';
-
 const data = JSON.parse(localStorage.getItem('courseGPA'));
 
 document.getElementsByClassName('value name')[0].innerText = data.name;
@@ -10,9 +8,10 @@ document.getElementsByClassName('value student-type')[0].innerText = data.studen
 
 const summaryTable = document.getElementsByClassName('summary')[0];
 let totalCredits = 0;
+
 // right now the code in other file is such that the excluded courses are not reaching here.
 const typeCreditsMap = new Map(JSON.parse(data.typeCreditsMap));
-typeCreditsMap.forEach((type, credits) => {
+typeCreditsMap.forEach((credits, type) => {
   const row = document.createElement('tr');
   totalCredits += credits;
   row.innerHTML = `<td>${type}</td><td class="credits">${credits}</td>`;

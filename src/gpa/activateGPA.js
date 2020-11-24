@@ -24,36 +24,43 @@ const gradeValues = {
 };
 // console.log(studentId);
 const appendCheckbox = (parent, isChecked) => {
-  parent.append(
-    `<input class="cgpa_cal_check" type="checkbox" ${
-      isChecked ? 'checked' : ''
-    } />`,
-  );
+  const checkbox = document.createElement('input');
+  checkbox.className = 'cgpa_cal_check';
+  checkbox.type = 'checkbox';
+  if (isChecked === true) checkbox.checked = true;
+  else checkbox.checked = false;
+  parent.before(checkbox);
 };
 
 const addCheckboxes = () => {
   const coursesChecked = new Set();
-  $('.cgpa_cal_check').remove();
-  const elems = $('.hierarchyLi.dataLi').not('.hierarchyHdr, .hierarchySubHdr');
-  elems.each(() => {
-    const courseID = $(this).children('.col1').html().trim();
+  const checkboxList = document.querySelectorAll('.cgpa_cal_check');
+  checkboxList.forEach((each) => {
+    each.remove();
+  });
+  const elems = document.querySelectorAll('.hierarchyLi.dataLi.tab_body_bg');
+  elems.forEach((eachCourse) => {
+    if (eachCourse.childNodes.length < 9) return;
+
+    const courseID = eachCourse.childNodes[0].innerText;
     if (coursesChecked.has(courseID)) {
-      appendCheckbox($(this).children('.col1'), false);
+      // incase the course has already been done before
+      // For example, Improvements, do not include it.
+      appendCheckbox(eachCourse.childNodes[0], false);
       return;
     }
-    let isChecked = true;
-    const type = $(this).children('.col5').html().trim()
-      .slice(6);
-    const grade = $(this).children('.col8').html().trim()
-      .slice(6);
+    let isChecked = true; // assume all courses to be valid
+    const type = eachCourse.childNodes[4].innerText.trim();
+    const grade = eachCourse.childNodes[7].innerText.trim();
+    // console.log(grade);
     if (excludeList.indexOf(type) > -1 || grade === '' || grade === 'I') {
+      // If Course is incomplete, hasn't finished or is to be excluded
       isChecked = false;
     }
-
     if (isChecked) {
       coursesChecked.add(courseID);
     }
-    appendCheckbox($(this).children('.col1'), isChecked);
+    appendCheckbox(eachCourse.childNodes[0], isChecked);
   });
 };
 
@@ -61,32 +68,27 @@ const showTotalGPA = () => {
   const courses = [];
   let totalGrades = 0;
   let totalCredits = 0;
-  $('#gpa_button').val('Calculating');
-  $('#gpa_bar').remove();
-  if ($('.cgpa_cal_check').length === 0) {
+  const gpaButton = document.querySelectorAll('#gpa_button');
+  gpaButton.innerHTML = 'Calculating';
+  const checkboxList = document.querySelectorAll('.cgpa_cal_check');
+  if (checkboxList.length === 0) {
+    // add checboxes in case they don't exist.
     addCheckboxes();
   }
-  const elems = $('.hierarchyLi.dataLi').not('.hierarchyHdr, .hierarchySubHdr');
+  const elems = document.querySelectorAll('.hierarchyLi.dataLi.tab_body_bg');
+
   const typeCreditsMap = new Map();
-  elems.each(() => {
-    if ($(this).find('.cgpa_cal_check:checked').length === 0) {
+  elems.forEach((eachCourse) => {
+    if (eachCourse.querySelectorAll('.cgpa_cal_check:checked').length === 0) {
       return;
     }
-
+    if (eachCourse.childNodes.length < 9) return;
     const course = {};
-    course.code = $(this)
-      .children('.col1')
-      .contents()
-      .filter(() => this.nodeType === Node.TEXT_NODE)
-      .text()
-      .trim();
-    course.name = $(this).children('.col2').html().trim();
-    course.type = $(this).children('.col5').html().trim()
-      .slice(6);
-    course.grade = $(this).children('.col8').html().trim()
-      .slice(6);
-    course.credits = Number($(this).children('.col3').html().trim()
-      .slice(6));
+    course.code = eachCourse.childNodes[1].innerText.trim();
+    course.name = eachCourse.childNodes[2].innerText;
+    course.type = eachCourse.childNodes[5].innerText.trim();
+    course.grade = eachCourse.childNodes[8].innerText.trim();
+    course.credits = Number(eachCourse.childNodes[3].innerText.trim());
     if (!(course.grade in gradeValues)) {
       return;
     }
@@ -99,7 +101,6 @@ const showTotalGPA = () => {
     } else {
       typeCreditsMap.set(course.type, course.credits);
     }
-
     const gradeValue = gradeValues[course.grade];
     const { credits } = course;
     totalGrades += credits * gradeValue;
@@ -107,23 +108,16 @@ const showTotalGPA = () => {
     courses.push(course);
   });
   const gpa = (totalGrades / totalCredits).toFixed(2);
+  const studentDataDiv = document.querySelectorAll(
+    '.studentInfoDiv.inlineBlock',
+  )[0];
   return {
-    name: $('.stuName').text().trim(),
-    rollno: $('.studentInfoDiv>.flexDiv:nth-child(3)')
-      .find('span')
-      .text()
-      .trim(),
-    branch: $('.studentInfoDiv>.flexDiv:nth-child(5)')
-      .find('div:nth-child(1)')
-      .find('span')
-      .text()
-      .trim(),
-    student_type: $('.studentInfoDiv>.flexDiv:nth-child(5)')
-      .find('div:nth-child(2)')
-      .find('span')
-      .text()
-      .trim(),
-    type_credits_map: JSON.stringify(Array.from(typeCreditsMap)),
+    name: studentDataDiv.childNodes[1].innerHTML,
+    rollno: studentDataDiv.childNodes[5].childNodes[3].innerHTML,
+    branch: studentDataDiv.childNodes[9].childNodes[1].childNodes[3].innerHTML,
+    studentType:
+      studentDataDiv.childNodes[9].childNodes[3].childNodes[3].innerText,
+    typeCreditsMap: JSON.stringify(Array.from(typeCreditsMap)),
     courses: JSON.stringify(courses),
     gpa,
   };
