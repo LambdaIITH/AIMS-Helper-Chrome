@@ -127,8 +127,8 @@ while (true) {
       currentCourseCodeInput.previousSibling.data,
     );
     currentCourseNameInput.setAttribute(
-      "title",
-      currentCourseNameInput.previousSibling.data
+      'title',
+      currentCourseNameInput.previousSibling.data,
     );
   }
   // Get the course segment duration.getElements
@@ -200,7 +200,9 @@ while (true) {
     if (possibilities) {
       if (possibilities.length === 1) {
         identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
-        identifiedCourseNames.push(currentCourseNameInput.getAttribute("title"));
+        identifiedCourseNames.push(
+          currentCourseNameInput.getAttribute('title'),
+        );
         identifiedSlots.push(possibilities[0]);
         identifiedSegments.push(segmentString);
       } else {
@@ -238,9 +240,11 @@ identifiedCourseNames.forEach((courseName, i) => {
     <td class="Coursecode">${identifiedCourses[i]}</td>
     <td class="coursename">${courseName}</td>
   </tr>`;
-  const tableRef = document.getElementById('legend').getElementsByTagName('tbody')[0];
+  const tableRef = document
+    .getElementById('legend')
+    .getElementsByTagName('tbody')[0];
   const newRow = tableRef.insertRow(tableRef.rows.length);
-  newRow.innerHTML = myHtmlContent;  
+  newRow.innerHTML = myHtmlContent;
 });
 // noMatchFound.forEach((course) => {
 // var node = document.createTextNode(course + " ");
@@ -303,6 +307,6 @@ document
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
-        console.log(`Eror${errorCode}`);
+        console.log(`Error${errorCode}`);
       });
   });

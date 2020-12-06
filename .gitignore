@@ -141,3 +141,7 @@ GitHub.sublime-settings
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+
+##Build Directory
+build/

@@ -2,7 +2,9 @@
   "name": "aims-helper-chrome",
   "version": "1.0.0",
   "description": "The Google Chrome version of a cross-browser helper extension for the **AIMS Portal**, IIT Hyderabad. It is available at https://chrome.google.com/webstore/detail/aims-helper/njgpoifkefbbhjohcadcngdomfifcflj?hl=en.",
-  "scripts": {},
+  "scripts": {
+    "postinstall": "npx webpack"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iith-dashboard/AIMS-Helper-Chrome.git"
@@ -19,11 +21,12 @@
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.0",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "webpack-cli": "^4.2.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npx webpack"
     }
   },
   "lint-staged": {
@@ -37,6 +40,7 @@
   },
   "dependencies": {
     "firebase": "^7.22.1",
-    "html2pdf.js": "^0.9.2"
+    "html2pdf.js": "^0.9.2",
+    "webpack": "^5.10.0"
   }
 }
