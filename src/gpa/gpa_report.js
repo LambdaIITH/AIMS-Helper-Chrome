@@ -1,3 +1,5 @@
+import html2pdf from 'html2pdf.js';
+
 const data = JSON.parse(localStorage.getItem('courseGPA'));
 
 document.getElementsByClassName('value name')[0].innerText = data.name;
