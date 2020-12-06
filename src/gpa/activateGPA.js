@@ -6,6 +6,7 @@ Source: https://github.com/IITH/aims-gpa-calculator
   const appendCheckbox = (parent, isChecked) => {
     const checkbox = document.createElement('input');
     checkbox.className = 'cgpa_cal_check';
+
     checkbox.type = 'checkbox';
     if (isChecked === true) checkbox.checked = true;
     else checkbox.checked = false;
