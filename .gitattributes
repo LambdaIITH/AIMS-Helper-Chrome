@@ -120,6 +120,7 @@ TODO              text
 .htaccess         text
 *.lock            text -diff
 package-lock.json text -diff
+manifest.json     text filter=manifest
 *.npmignore       text
 *.yaml            text
 *.yml             text

@@ -1,0 +1,3 @@
+[filter "manifest"]
+	clean = sed 's/\"name\": \"Dev-/\"name\": \"/'
+	smudge = sed 's/\"name\": \"*/&Dev-/'
