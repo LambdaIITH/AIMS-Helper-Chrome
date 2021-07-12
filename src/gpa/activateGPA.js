@@ -89,7 +89,7 @@ const showTotalGPA = () => {
     course.type = eachCourse.childNodes[5].innerText.trim();
     course.grade = eachCourse.childNodes[8].innerText.trim();
     course.credits = Number(eachCourse.childNodes[3].innerText.trim());
-    if (!(course.grade in gradeValues)) {
+    if (!(course.grade in gradeValues || course.grade === 'S')) {
       return;
     }
 
@@ -101,10 +101,14 @@ const showTotalGPA = () => {
     } else {
       typeCreditsMap.set(course.type, course.credits);
     }
-    const gradeValue = gradeValues[course.grade];
-    const { credits } = course;
-    totalGrades += credits * gradeValue;
-    totalCredits += credits;
+
+    // If the student took an S grade, display it without considering it for CGPA.
+    if (course.grade !== 'S') {
+      const gradeValue = gradeValues[course.grade];
+      const { credits } = course;
+      totalGrades += credits * gradeValue;
+      totalCredits += credits;
+    }
     courses.push(course);
   });
   const gpa = (totalGrades / totalCredits).toFixed(2);
