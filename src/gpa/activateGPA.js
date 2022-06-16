@@ -3,12 +3,12 @@ Source: https://github.com/IITH/aims-gpa-calculator
 */
 
 const excludeList = [
-  'Minor core',
-  'Honors core',
-  'Honours project',
-  'Honours coursework',
-  'FCC',
-  'Additional',
+  'minor core',
+  'honors core',
+  'honours project',
+  'honours coursework',
+  'fcc',
+  'additional',
 ];
 const gradeValues = {
   'A+': 10,
@@ -53,7 +53,11 @@ const addCheckboxes = () => {
     const type = eachCourse.childNodes[4].innerText.trim();
     const grade = eachCourse.childNodes[7].innerText.trim();
     // console.log(grade);
-    if (excludeList.indexOf(type) > -1 || grade === '' || grade === 'I') {
+    if (
+      excludeList.indexOf(type.toLowerCase()) > -1
+      || grade === ''
+      || grade === 'I'
+    ) {
       // If Course is incomplete, hasn't finished or is to be excluded
       isChecked = false;
     }
