@@ -1,7 +1,8 @@
 /*
 Source: https://github.com/IITH/aims-gpa-calculator
 */
-
+(function () {
+  // wrap code in an IIFE to prevent redeclaration errors on re-invoke.
 const excludeList = [
   'minor core',
   'honors core',
@@ -134,3 +135,4 @@ chrome.runtime.sendMessage({
   action: 'parsedGPA',
   data: showTotalGPA(),
 });
+})();
