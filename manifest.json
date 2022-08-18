@@ -2,6 +2,12 @@
     "manifest_version": 2,
     "name": "AIMS-Helper",
     "version": "0.1",
+    "content_scripts":[
+      {
+        "matches":["https://aims.iith.ac.in/aims/"],
+        "js":["/src/captcha/captcha_filler_1.js"]
+      }
+    ],
     "background": {
       "scripts": ["/src/bg/background.js"],
       "persistent":false
