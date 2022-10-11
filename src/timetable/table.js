@@ -142,7 +142,6 @@ const clean = (str) => {
   end = endTimes.find(
     (x) => Math.abs(60 * (end[0] - x[0]) + end[1] - x[1]) < timeError,
   );
-  console.log(`${f(start[0])}:${f(start[1])}-${f(end[0])}:${f(end[1])}`);
   return `${f(start[0])}:${f(start[1])}-${f(end[0])}:${f(end[1])}`;
 };
 
