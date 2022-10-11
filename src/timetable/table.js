@@ -9,7 +9,7 @@ const slots = [
   '12:00-12:55',
   '14:30-15:55',
   '16:00-17:25',
-  '17:30-19:00',
+  '17:30-18:55',
   '19:00-20:30',
 ];
 
@@ -61,7 +61,7 @@ slotIndex.Tuesday['11:00-11:55'] = ['F', 'FN2'];
 slotIndex.Tuesday['12:00-12:55'] = ['G'];
 slotIndex.Tuesday['14:30-15:55'] = ['R', 'AN2'];
 slotIndex.Tuesday['16:00-17:25'] = ['S', 'AN2'];
-slotIndex.Tuesday['17:30-19:00'] = ['Y'];
+slotIndex.Tuesday['17:30-18:55'] = ['Y'];
 slotIndex.Tuesday['19:00-20:30'] = ['Z'];
 
 slotIndex.Wednesday['09:00-09:55'] = ['B', 'FN3'];
@@ -77,7 +77,7 @@ slotIndex.Thursday['11:00-11:55'] = ['B', 'FN4'];
 slotIndex.Thursday['12:00-12:55'] = ['E'];
 slotIndex.Thursday['14:30-15:55'] = ['Q', 'AN4'];
 slotIndex.Thursday['16:00-17:25'] = ['P', 'AN4'];
-slotIndex.Thursday['17:30-19:00'] = ['W'];
+slotIndex.Thursday['17:30-18:55'] = ['W'];
 slotIndex.Thursday['19:00-20:30'] = ['X'];
 
 slotIndex.Friday['09:00-09:55'] = ['E', 'FN5'];
@@ -86,7 +86,7 @@ slotIndex.Friday['11:00-11:55'] = ['D', 'FN5'];
 slotIndex.Friday['12:00-12:55'] = ['G'];
 slotIndex.Friday['14:30-15:55'] = ['S', 'AN5'];
 slotIndex.Friday['16:00-17:25'] = ['R', 'AN5'];
-slotIndex.Friday['17:30-19:00'] = ['Y'];
+slotIndex.Friday['17:30-18:55'] = ['Y'];
 slotIndex.Friday['19:00-20:30'] = ['Z'];
 
 function getAllIndexes(arr, val) {
