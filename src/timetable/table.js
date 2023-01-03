@@ -9,7 +9,7 @@ const slots = [
   '12:00-12:55',
   '14:30-15:55',
   '16:00-17:25',
-  '17:30-19:00',
+  '17:30-18:55',
   '19:00-20:30',
 ];
 
@@ -61,7 +61,7 @@ slotIndex.Tuesday['11:00-11:55'] = ['F', 'FN2'];
 slotIndex.Tuesday['12:00-12:55'] = ['G'];
 slotIndex.Tuesday['14:30-15:55'] = ['R', 'AN2'];
 slotIndex.Tuesday['16:00-17:25'] = ['S', 'AN2'];
-slotIndex.Tuesday['17:30-19:00'] = ['Y'];
+slotIndex.Tuesday['17:30-18:55'] = ['Y'];
 slotIndex.Tuesday['19:00-20:30'] = ['Z'];
 
 slotIndex.Wednesday['09:00-09:55'] = ['B', 'FN3'];
@@ -77,7 +77,7 @@ slotIndex.Thursday['11:00-11:55'] = ['B', 'FN4'];
 slotIndex.Thursday['12:00-12:55'] = ['E'];
 slotIndex.Thursday['14:30-15:55'] = ['Q', 'AN4'];
 slotIndex.Thursday['16:00-17:25'] = ['P', 'AN4'];
-slotIndex.Thursday['17:30-19:00'] = ['W'];
+slotIndex.Thursday['17:30-18:55'] = ['W'];
 slotIndex.Thursday['19:00-20:30'] = ['X'];
 
 slotIndex.Friday['09:00-09:55'] = ['E', 'FN5'];
@@ -86,7 +86,7 @@ slotIndex.Friday['11:00-11:55'] = ['D', 'FN5'];
 slotIndex.Friday['12:00-12:55'] = ['G'];
 slotIndex.Friday['14:30-15:55'] = ['S', 'AN5'];
 slotIndex.Friday['16:00-17:25'] = ['R', 'AN5'];
-slotIndex.Friday['17:30-19:00'] = ['Y'];
+slotIndex.Friday['17:30-18:55'] = ['Y'];
 slotIndex.Friday['19:00-20:30'] = ['Z'];
 
 function getAllIndexes(arr, val) {
@@ -101,9 +101,7 @@ function getAllIndexes(arr, val) {
 
 const parser = new DOMParser();
 const DOM = parser.parseFromString(localStorage.getItem('DOM'), 'text/html');
-const dataDegDtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute(
-  'data-deg-dtl',
-);
+const dataDegDtl = DOM.getElementsByClassName('studentDegDtls')[0].getAttribute('data-deg-dtl');
 // const studentDegreeString = `stdntDeg_x_${dataDegDtl}_1`;
 const noMatchFound = [];
 let currentID = 1;
@@ -111,6 +109,41 @@ const identifiedCourses = [];
 const identifiedCourseNames = [];
 const identifiedSlots = [];
 const identifiedSegments = [];
+
+const startTimes = [
+  [9, 0],
+  [10, 0],
+  [11, 0],
+  [12, 0],
+  [14, 30],
+  [16, 0],
+  [17, 30],
+  [19, 0],
+];
+const endTimes = [
+  [9, 55],
+  [10, 55],
+  [11, 55],
+  [12, 55],
+  [15, 55],
+  [17, 25],
+  [18, 55],
+  [20, 30],
+];
+const f = (x) => (x < 10 ? '0' : '') + x; // Format time to two digits
+const timeError = 29; // Maximum error in minutes
+
+const clean = (str) => {
+  let start = [parseInt(str.slice(0, 2), 10), parseInt(str.slice(3, 5), 10)];
+  let end = [parseInt(str.slice(6, 8), 10), parseInt(str.slice(9, 11), 10)];
+  start = startTimes.find(
+    (x) => Math.abs(60 * (start[0] - x[0]) + start[1] - x[1]) < timeError,
+  );
+  end = endTimes.find(
+    (x) => Math.abs(60 * (end[0] - x[0]) + end[1] - x[1]) < timeError,
+  );
+  return `${f(start[0])}:${f(start[1])}-${f(end[0])}:${f(end[1])}`;
+};
 
 while (true) {
   const courseCodeID = `cCd_${currentID}_${dataDegDtl}_1`;
@@ -127,8 +160,8 @@ while (true) {
       currentCourseCodeInput.previousSibling.data,
     );
     currentCourseNameInput.setAttribute(
-      "title",
-      currentCourseNameInput.previousSibling.data
+      'title',
+      currentCourseNameInput.previousSibling.data,
     );
   }
   // Get the course segment duration.getElements
@@ -154,7 +187,7 @@ while (true) {
       .getElementsByClassName('ttd2')[0]
       .getElementsByTagName('span')[1]
       .textContent.split('-')[0];
-    const time = `${
+    let time = `${
       currentTimetableRows[0]
         .getElementsByClassName('ttd2')[0]
         .getElementsByTagName('span')[1]
@@ -165,6 +198,7 @@ while (true) {
         .getElementsByTagName('span')[1]
         .textContent.split('-')[2]
     }`;
+    time = clean(time);
     let possibilities = slotIndex[day][time];
     for (let i = 1; i < currentTimetableRows.length; i += 1) {
       const day2 = currentTimetableRows[i]
@@ -200,7 +234,9 @@ while (true) {
     if (possibilities) {
       if (possibilities.length === 1) {
         identifiedCourses.push(currentCourseCodeInput.getAttribute('title'));
-        identifiedCourseNames.push(currentCourseNameInput.getAttribute("title"));
+        identifiedCourseNames.push(
+          currentCourseNameInput.getAttribute('title'),
+        );
         identifiedSlots.push(possibilities[0]);
         identifiedSegments.push(segmentString);
       } else {
@@ -238,9 +274,11 @@ identifiedCourseNames.forEach((courseName, i) => {
     <td class="Coursecode">${identifiedCourses[i]}</td>
     <td class="coursename">${courseName}</td>
   </tr>`;
-  const tableRef = document.getElementById('legend').getElementsByTagName('tbody')[0];
+  const tableRef = document
+    .getElementById('legend')
+    .getElementsByTagName('tbody')[0];
   const newRow = tableRef.insertRow(tableRef.rows.length);
-  newRow.innerHTML = myHtmlContent;  
+  newRow.innerHTML = myHtmlContent;
 });
 // noMatchFound.forEach((course) => {
 // var node = document.createTextNode(course + " ");
