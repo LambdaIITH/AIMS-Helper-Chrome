@@ -199,7 +199,7 @@ while (true) {
         .textContent.split('-')[2]
     }`;
     time = clean(time);
-    let possibilities = slotIndex[day][time];
+    let possibilities = slotIndex[day]?.[time];
     for (let i = 1; i < currentTimetableRows.length; i += 1) {
       const day2 = currentTimetableRows[i]
         .getElementsByClassName('ttd2')[0]
