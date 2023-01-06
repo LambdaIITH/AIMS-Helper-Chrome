@@ -198,7 +198,7 @@ while (true) {
         .getElementsByTagName('span')[1]
         .textContent.split('-')[2]
     }`;
-    time = clean(time);
+    time = time ? clean(time) : time;
     let possibilities = slotIndex[day]?.[time];
     for (let i = 1; i < currentTimetableRows.length; i += 1) {
       const day2 = currentTimetableRows[i]
@@ -289,7 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
     .getElementsByClassName('download-pdf')[0]
     .addEventListener('click', () => {
       const element = document.getElementById('timetable');
-      html2pdf(element);
+	  const opt = {
+		  filename: 'timetable.pdf',
+		  pagebreak: 'avoid-all',
+		  jsPDF: { unit:'px', orientation:'landscape', format:[1470,415] }
+	  };
+	  const worker = html2pdf().set(opt).from(element).save();
     });
 });
 
