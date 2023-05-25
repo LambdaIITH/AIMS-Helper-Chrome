@@ -6,6 +6,7 @@ Source: https://github.com/IITH/aims-gpa-calculator
 const excludeList = [
   'minor core',
   'honors core',
+  'minor elective',
   'honours project',
   'honours coursework',
   'fcc',
