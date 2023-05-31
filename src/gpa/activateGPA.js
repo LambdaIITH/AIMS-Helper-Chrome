@@ -34,6 +34,41 @@ const appendCheckbox = (parent, isChecked) => {
   parent.before(checkbox);
 };
 
+const appendSelectionCheckbox = (element) => {
+  const checkbox = document.createElement('input');
+  checkbox.className = 'sem_sel_check';
+  checkbox.type = 'checkbox';
+  checkbox.checked = true; // eslint-disable-line
+
+  checkbox.addEventListener('change', function () {
+    console.log(this.checked);
+    const semHeaderList = this.parentElement.parentElement.parentElement;
+    const checkboxList = semHeaderList.querySelectorAll('.cgpa_cal_check');
+    if (this.checked) {
+    /* select all courses in that semester which should be selected by default. */
+      checkboxList.forEach((each) => {
+        each.checked = true; // eslint-disable-line
+        const type = each.parentNode.children[5].innerText.trim();
+        const grade = each.parentNode.children[8].innerText.trim();
+        if (
+          excludeList.indexOf(type.toLowerCase()) > -1
+        || grade === ''
+        || grade === 'I'
+        ) {
+        /* If Course is incomplete, hasn't finished or is to be excluded */
+          each.checked = false; // eslint-disable-line
+        }
+      });
+    } else {
+    /* unselect all courses in that semester */
+      checkboxList.forEach((each) => {
+        each.checked = false; // eslint-disable-line
+      });
+    }
+  });
+  element.after(checkbox);
+};
+
 const addCheckboxes = () => {
   const coursesChecked = new Set();
   const checkboxList = document.querySelectorAll('.cgpa_cal_check');
@@ -67,6 +102,13 @@ const addCheckboxes = () => {
       coursesChecked.add(courseID);
     }
     appendCheckbox(eachCourse.childNodes[0], isChecked);
+  });
+  const semMarkers = document.querySelectorAll(
+    '.hierarchyLi.dataLi.hierarchyHdr.changeHdrCls.tab_body_bg',
+  );
+  semMarkers.forEach((eachSem) => {
+    const insertionElement = eachSem.lastChild.firstChild;
+    appendSelectionCheckbox(insertionElement);
   });
 };
 
