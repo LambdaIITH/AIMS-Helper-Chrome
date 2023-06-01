@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "AIMS-Helper",
-    "version": "0.6",
+    "version": "0.8",
     "background": {
       "scripts": ["/src/bg/background.js"],
       "persistent":false
