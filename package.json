@@ -36,7 +36,7 @@
     ]
   },
   "dependencies": {
-    "firebase": "^7.22.1",
+    "firebase": "^9.15.0",
     "html2pdf.js": "^0.9.3"
   }
 }
